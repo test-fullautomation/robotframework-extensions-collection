@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2022 Robert Bosch Car Multimedia GmbH
+#  Copyright 2020-2022 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -87,7 +87,7 @@ class CConfig():
         self.__dictConfig['sDevelopmentStatus']          = "Development Status :: 4 - Beta"
         self.__dictConfig['sIntendedAudience']           = "Intended Audience :: Developers"
         self.__dictConfig['sTopic']                      = "Topic :: Software Development"
-        self.__dictConfig['arInstallRequires']            = ['sphinx','pypandoc','colorama']
+        self.__dictConfig['arInstallRequires']           = ['sphinx','pypandoc','colorama','PythonExtensionsCollection']
 
 
         # 2. certain folder and executables (things that requires computation)
