@@ -1,4 +1,4 @@
-.. Copyright 2020-2022 Robert Bosch Car Multimedia GmbH
+.. Copyright 2020-2022 Robert Bosch GmbH
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,4 +20,11 @@ that are implemented in the *Python Extensions Collection*.
 
 The goal behind these extensions is to have certain functionality available in both: pure Python applications and Robotframework.
 
-(*Last update: 05.01.2022*)
+Precondition
+------------
+
+The *Robotframework Extensions Collection* requires an installed *Python Extensions Collection*
+
+   https://github.com/test-fullautomation/python-extensions-collection
+
+(*Last update: 08.03.2022*)
