@@ -60,6 +60,9 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
+# 11.03.2022 / XC-CT/ECA3-Queckenstedt
+# 'package_dir' added
+#
 # 22.02.2022 / XC-CT/ECA3-Queckenstedt
 # "sdist bdist_wheel" maintenance: some steps moved from inside 'ExtendedInstallCommand' to outside
 # 
@@ -204,7 +207,8 @@ setuptools.setup(
     long_description = long_description,
     long_description_content_type = str(oRepositoryConfig.Get('sLongDescriptionContentType')),
     url = str(oRepositoryConfig.Get('sURL')),
-    packages = [str(oRepositoryConfig.Get('sPackageName'))],
+    packages = [str(oRepositoryConfig.Get('sImportName')),],
+    package_dir = {str(oRepositoryConfig.Get('sPackageName')) : str(oRepositoryConfig.Get('sImportName'))},
     classifiers = [
         str(oRepositoryConfig.Get('sProgrammingLanguage')),
         str(oRepositoryConfig.Get('sLicence')),
