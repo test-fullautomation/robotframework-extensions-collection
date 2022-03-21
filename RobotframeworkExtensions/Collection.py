@@ -26,8 +26,8 @@ from PythonExtensionsCollection.String.CString import CString
 # --------------------------------------------------------------------------------------------------------------
 
 sThisModuleName    = "Collection.py"
-sThisModuleVersion = "0.2.1"
-sThisModuleDate    = "05.01.2022"
+sThisModuleVersion = "0.2.2"
+sThisModuleDate    = "21.03.2022"
 sThisModule        = sThisModuleName + " v. " + sThisModuleVersion + " / " + sThisModuleDate
 
 # --------------------------------------------------------------------------------------------------------------
@@ -56,50 +56,55 @@ class Collection(object):
     @keyword
     def pretty_print(self, oData=None):
        """
-       The ``pretty_print`` keyword logs the content of parameters of any Python data type (input: ``oData``).
+**Keyword: pretty_print**
+   The ``pretty_print`` keyword logs the content of parameters of any Python data type (input: ``oData``).
 
-       Simple data types are logged directly. Composite data types are resolved before logging.
+   Simple data types are logged directly. Composite data types are resolved before logging.
 
-       The output contains for every parameter: the value, the type and counter values (in case of composite data types).
+   The output contains for every parameter: the value, the type and counter values (in case of composite data types).
 
-       The trace level for output is ``INFO``.
+   The trace level for output is ``INFO``.
 
-       The output is also returned as list of strings.
+   The output is also returned as list of strings.
 
-       **Example:**
+**Args:**
+   **oData** (*Python variable of any type*)
 
-       Example variable of Python type ``list``:
+**Returns:**
+   **listOutLines** (*list*)
+      list of strings containing the resolved data structure of ``oData`` (same content as printed to console).
 
-       .. code::
+**Library import:**
+   The library containing the keyword definition can be imported in the following way:
 
-          set_test_variable    @{aItems}    String
-          ...                               ${25}
-          ...                               ${True}
-          ...                               ${None}
+   .. code::
 
-       Import of library containing the keyword definition:
+      Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
 
-       .. code::
+**Example:**
+   Variable of Python type ``list``:
 
-          Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
+   .. code::
 
-       Call of ``pretty_print`` keyword:
+      set_test_variable    @{aItems}    String
+      ...                               ${25}
+      ...                               ${True}
+      ...                               ${None}
 
-       .. code::
+   Call of ``pretty_print`` keyword:
 
-          rf.extensions.pretty_print    ${aItems}
+   .. code::
 
-       Output:
+      rf.extensions.pretty_print    ${aItems}
 
-       .. code::
+   Output:
 
-          INFO - [LIST] (4/1) > [STR]  :  'String'
-          INFO - [LIST] (4/2) > [INT]  :  25
-          INFO - [LIST] (4/3) > [BOOL]  :  True
-          INFO - [LIST] (4/4) > [NONE]  :  None
+   .. code::
 
-|
-|
+      INFO - [LIST] (4/1) > [STR]  :  'String'
+      INFO - [LIST] (4/2) > [INT]  :  25
+      INFO - [LIST] (4/3) > [BOOL]  :  True
+      INFO - [LIST] (4/4) > [NONE]  :  None
        """
 
        # BuiltIn().log(f"This is {self.sThisModule}", "INFO") # debug
@@ -119,138 +124,125 @@ class Collection(object):
     @keyword
     def normalize_path(self, sPath=None, bWin=False, sReferencePathAbs=None, bConsiderBlanks=False, bExpandEnvVars=True, bMask=True):
        """
+**Keyword: normalize_path**
+   Normalizes local paths, paths to local network resources and internet addresses
 
-       **Keyword:**
+**Args:**
+   **sPath** (*string*)
+      The path to be normalized
 
-       **normalize_path**
+   **bWin** (*boolean; optional; default: False*)
+      If ``True`` then the returned path contains masked backslashes as separator, otherwise slashes
 
-          Normalizes local paths, paths to local network resources and internet addresses
+   **sReferencePathAbs** (*string, optional*)
+      In case of ``sPath`` is relative and ``sReferencePathAbs`` (expected to be absolute) is given, then
+      the returned absolute path is a join of both input paths
 
-       **Args:**
+   **bConsiderBlanks** (*boolean; optional; default: False*)
+      If ``True`` then the returned path is encapsulated in quotes - in case of the path contains blanks
 
-       **sPath** (*string*)
+   **bExpandEnvVars** (*boolean; optional; default: True*)
+      If ``True`` then in the returned path environment variables are resolved, otherwise not.
 
-          The path to be normalized
+   **bMask** (*boolean; optional; default: True; requires bWin=True*)
+      If ``bWin`` is ``True`` and ``bMask`` is ``True`` then the returned path contains masked backslashes as separator.
 
-       **bWin** (*boolean; optional; default: False*)
+      If ``bWin`` is ``True`` and ``bMask`` is ``False`` then the returned path contains single backslashes only - this might be
+      required for applications, that are not able to handle masked backslashes.
 
-          If ``True`` then returned path contains masked backslashes as separator, otherwise slashes
+      In case of ``bWin`` is ``False`` ``bMask`` has no effect.
 
-       **sReferencePathAbs** (*string, optional*)
+**Returns:**
+   **sPath** (*string*)
+      The normalized path (is ``None`` in case of ``sPath`` is ``None``)
 
-          In case of ``sPath`` is relative and ``sReferencePathAbs`` (expected to be absolute) is given, then
-          the returned absolute path is a join of both input paths
+**Library import:**
+   The library containing the keyword definition can be imported in the following way:
 
-       **bConsiderBlanks** (*boolean; optional; default: False*)
+   .. code::
 
-          If ``True`` then the returned path is encapsulated in quotes - in case of the path contains blanks
+      Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
 
-       **bExpandEnvVars** (*boolean; optional; default: True*)
 
-          If ``True`` then in the returned path environment variables are resolved, otherwise not.
+**Example 1:**
+   Variable containing a path with:
 
-       **bMask** (*boolean; optional; default: True; requires bWin=True*)
+   * different types of path separators
+   * redundant path separators (but backslashes have to be masked in the definition of the variable, this is *not* an unwanted redundancy)
+   * up-level references
 
-          If ``bWin`` is ``True`` and ``bMask`` is ``True`` then the returned path contains masked backslashes as separator.
-          If ``bWin`` is ``True`` and ``bMask`` is ``False`` then the returned path contains single backslashes only - this might be
-          required for applications, that are not able to handle masked backslashes. In case of ``bWin`` is ``False`` ``bMask`` has no effect.
+   .. code::
 
-       **Returns:**
+      set_test_variable    ${sPath}    C:\\\\subfolder1///../subfolder2\\\\\\\\../subfolder3\\\\
 
-       **sPath** (*string*)
+   Printing the content of ``sPath`` shows how the path looks like when the masking of the backslashes is resolved:
 
-          The normalized path (is ``None`` in case of ``sPath`` is ``None``)
+   .. code::
 
-       **Example 1:**
+      C:\\subfolder1///../subfolder2\\\\../subfolder3\\
 
-       Variable containing a path with:
 
-       * different types of path separators
-       * redundant path separators (but backslashes have to be masked in the definition of the variable, this is *not* an unwanted redundancy)
-       * up-level references
+   Usage of the ``normalize_path`` keyword:
 
-       .. code::
+   .. code::
 
-          set_test_variable    ${sPath}    C:\\\\subfolder1///../subfolder2\\\\\\\\../subfolder3\\\\
+      ${sPath}    rf.extensions.normalize_path    ${sPath}
 
-       Printing the content of ``sPath`` shows us how the path looks like when the masking of the backslashes is resolved:
+   Result (content of ``sPath``):
 
-       .. code::
+   .. code::
 
-          C:\\subfolder1///../subfolder2\\\\../subfolder3\\
+      C:/subfolder3
 
-       The keyword ``normalize_path`` is enabled by the following import:
+   In case we need the Windows version (with masked backslashes instead of slashes):
 
-       .. code::
+   .. code::
 
-          Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
+      ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}
 
-       Now we can use the ``normalize_path`` keyword:
+   Result (content of ``sPath``):
 
-       .. code::
+   .. code::
 
-          ${sPath}    rf.extensions.normalize_path    ${sPath}
+      C:\\\\subfolder3
 
-       Result (content of ``sPath``):
+   The masking of backslashes can be deactivated:
 
-       .. code::
+   .. code::
 
-          C:/subfolder3
+      ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}    bMask=${False}
 
-       In case we need the Windows version (with masked backslashes instead of slashes):
+   Result (content of ``sPath``):
 
-       .. code::
+   .. code::
 
-          ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}
+      C:\\subfolder3
 
-       Result (content of ``sPath``):
+**Example 2:**
+   Variable containing a path of a local network resource:
 
-       .. code::
+   .. code::
 
-          C:\\\\subfolder3
+      set_test_variable    ${sPath}    \\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
 
-       The masking of backslashes can be deactivated:
+   Result of normalization:
 
-       .. code::
+   .. code::
 
-          ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}    bMask=${False}
+      //anyserver.com/part1/part2/part3/part4
 
-       Result (content of ``sPath``):
+**Example 3:**
+   Variable containing an internet address:
 
-       .. code::
+   .. code::
 
-          C:\\subfolder3
+      set_test_variable    ${sPath}    http:\\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
 
-       **Example 2:**
+   Result of normalization:
 
-       Variable containing a path of a local network resource:
+   .. code::
 
-       .. code::
-
-          set_test_variable    ${sPath}    \\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
-
-       Result of normalization:
-
-       .. code::
-
-          //anyserver.com/part1/part2/part3/part4
-
-       **Example 3:**
-
-       Variable containing an internet address:
-
-       .. code::
-
-          set_test_variable    ${sPath}    http:\\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
-
-       Result of normalization:
-
-       .. code::
-
-          http://anyserver.com/part1/part2/part3/part4
-
-|
-|
+      http://anyserver.com/part1/part2/part3/part4
        """
        sPath = CString.NormalizePath(sPath, bWin, sReferencePathAbs, bConsiderBlanks, bExpandEnvVars, bMask)
        return sPath
