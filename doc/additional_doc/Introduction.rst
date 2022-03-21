@@ -27,4 +27,8 @@ The *Robotframework Extensions Collection* requires an installed *Python Extensi
 
    https://github.com/test-fullautomation/python-extensions-collection
 
-(*Last update: 08.03.2022*)
+|
+|
+|
+
+(*Last update: 21.03.2022*)
