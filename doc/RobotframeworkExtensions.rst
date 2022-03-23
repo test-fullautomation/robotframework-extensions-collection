@@ -12,6 +12,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
+
+.. rst-class:: dl-parameters
+
+.. role:: aspect (emphasis)
+.. role:: sep (strong)
+
+
 Robotframework Extensions Collection
 ------------------------------------
 

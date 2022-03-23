@@ -68,11 +68,19 @@ class Collection(object):
    The output is also returned as list of strings.
 
 **Args:**
-   **oData** (*Python variable of any type*)
+   ``oData``
+      :sep:`|` :aspect:`Condition:` required
+      :sep:`|` :aspect:`Type:` any Python type
+      :sep:`|`
+
+      Data to be pretty printed
 
 **Returns:**
-   **listOutLines** (*list*)
-      list of strings containing the resolved data structure of ``oData`` (same content as printed to console).
+   ``listOutLines`` (*list*)
+      :sep:`|` :aspect:`Type:` list
+      :sep:`|`
+
+      List of strings containing the resolved data structure of ``oData`` (same content as printed to console).
 
 **Library import:**
    The library containing the keyword definition can be imported in the following way:
@@ -128,23 +136,52 @@ class Collection(object):
    Normalizes local paths, paths to local network resources and internet addresses
 
 **Args:**
-   **sPath** (*string*)
+   ``sPath``
+      :sep:`|` :aspect:`Condition:` required
+      :sep:`|` :aspect:`Type:` string
+      :sep:`|`
+
       The path to be normalized
 
-   **bWin** (*boolean; optional; default: False*)
+   ``bWin``
+      :sep:`|` :aspect:`Condition:` optional
+      :sep:`|` :aspect:`Type:` boolean
+      :sep:`|` :aspect:`Default:` False
+      :sep:`|`
+
       If ``True`` then the returned path contains masked backslashes as separator, otherwise slashes
 
-   **sReferencePathAbs** (*string, optional*)
+   ``sReferencePathAbs``
+      :sep:`|` :aspect:`Condition:` optional
+      :sep:`|` :aspect:`Type:` string
+      :sep:`|` :aspect:`Default:` None
+      :sep:`|`
+
       In case of ``sPath`` is relative and ``sReferencePathAbs`` (expected to be absolute) is given, then
       the returned absolute path is a join of both input paths
 
-   **bConsiderBlanks** (*boolean; optional; default: False*)
+   ``bConsiderBlanks``
+      :sep:`|` :aspect:`Condition:` optional
+      :sep:`|` :aspect:`Type:` boolean
+      :sep:`|` :aspect:`Default:` False
+      :sep:`|`
+
       If ``True`` then the returned path is encapsulated in quotes - in case of the path contains blanks
 
-   **bExpandEnvVars** (*boolean; optional; default: True*)
+   ``bExpandEnvVars``
+      :sep:`|` :aspect:`Condition:` optional
+      :sep:`|` :aspect:`Type:` boolean
+      :sep:`|` :aspect:`Default:` True
+      :sep:`|`
+
       If ``True`` then in the returned path environment variables are resolved, otherwise not.
 
-   **bMask** (*boolean; optional; default: True; requires bWin=True*)
+   ``bMask``
+      :sep:`|` :aspect:`Condition:` optional
+      :sep:`|` :aspect:`Type:` boolean
+      :sep:`|` :aspect:`Default:` True (requires ``bWin=True``)
+      :sep:`|`
+
       If ``bWin`` is ``True`` and ``bMask`` is ``True`` then the returned path contains masked backslashes as separator.
 
       If ``bWin`` is ``True`` and ``bMask`` is ``False`` then the returned path contains single backslashes only - this might be
@@ -153,7 +190,10 @@ class Collection(object):
       In case of ``bWin`` is ``False`` ``bMask`` has no effect.
 
 **Returns:**
-   **sPath** (*string*)
+   ``sPath``
+      :sep:`|` :aspect:`Type:` string
+      :sep:`|`
+
       The normalized path (is ``None`` in case of ``sPath`` is ``None``)
 
 **Library import:**
