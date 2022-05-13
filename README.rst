@@ -38,7 +38,8 @@ Package Documentation
 ---------------------
 
 A detailed documentation of the Robotframework Extensions Collection package can be found here:
-`Robotframework-Extensions-Collection.pdf <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/Robotframework-Extensions-Collection.pdf>`_
+
+`RobotframeworkExtensions.pdf <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
 
 Feedback
 --------
