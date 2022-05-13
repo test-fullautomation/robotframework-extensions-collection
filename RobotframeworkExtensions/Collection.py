@@ -12,6 +12,17 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
+"""
+The Collection module is the interface between the Python Extensions Collection and the Robotframework.
+
+This library containing the keyword definitions, can be imported in the following way:
+
+.. code::
+
+   Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
+
+"""
+
 # -- import standard Python modules
 import pickle, os, time, random
 
@@ -26,15 +37,15 @@ from PythonExtensionsCollection.String.CString import CString
 # --------------------------------------------------------------------------------------------------------------
 
 sThisModuleName    = "Collection.py"
-sThisModuleVersion = "0.2.2"
-sThisModuleDate    = "21.03.2022"
+sThisModuleVersion = "0.3.0"      # should be aligned with repository_config.json
+sThisModuleDate    = "13.05.2022" # should be aligned with repository_config.json
 sThisModule        = sThisModuleName + " v. " + sThisModuleVersion + " / " + sThisModuleDate
 
 # --------------------------------------------------------------------------------------------------------------
 # 
 @library
 class Collection(object):
-    """The Collection module is the interface between the Python Extensions Collection and the Robotframework.
+    """Module main class
     """
 
     ROBOT_AUTO_KEYWORDS   = False # only decorated methods are keywords
@@ -56,63 +67,58 @@ class Collection(object):
     @keyword
     def pretty_print(self, oData=None):
        """
-**Keyword: pretty_print**
-   The ``pretty_print`` keyword logs the content of parameters of any Python data type (input: ``oData``).
+The ``pretty_print`` keyword logs the content of parameters of any Python data type (input: ``oData``).
 
-   Simple data types are logged directly. Composite data types are resolved before logging.
+Simple data types are logged directly. Composite data types are resolved before logging.
 
-   The output contains for every parameter: the value, the type and counter values (in case of composite data types).
+The output contains for every parameter: the value, the type and counter values (in case of composite data types).
 
-   The trace level for output is ``INFO``.
+The trace level for output is ``INFO``.
 
-   The output is also returned as list of strings.
+The output is also returned as list of strings.
 
-**Args:**
-   ``oData``
-      :sep:`|` :aspect:`Condition:` required
-      :sep:`|` :aspect:`Type:` any Python type
-      :sep:`|`
+**Arguments:**
 
-      Data to be pretty printed
+* ``oData``
+
+  / *Condition*: required / *Type*: any Python type /
+
+  Data to be pretty printed
 
 **Returns:**
-   ``listOutLines`` (*list*)
-      :sep:`|` :aspect:`Type:` list
-      :sep:`|`
 
-      List of strings containing the resolved data structure of ``oData`` (same content as printed to console).
+* ``listOutLines`` (*list*)
 
-**Library import:**
-   The library containing the keyword definition can be imported in the following way:
+  / *Type*: list /
 
-   .. code::
+  List of strings containing the resolved data structure of ``oData`` (same content as printed to console).
 
-      Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
 
 **Example:**
-   Variable of Python type ``list``:
 
-   .. code::
+Variable of Python type ``list``:
 
-      set_test_variable    @{aItems}    String
-      ...                               ${25}
-      ...                               ${True}
-      ...                               ${None}
+.. code::
 
-   Call of ``pretty_print`` keyword:
+   set_test_variable    @{aItems}    String
+   ...                               ${25}
+   ...                               ${True}
+   ...                               ${None}
 
-   .. code::
+Call of ``pretty_print`` keyword:
 
-      rf.extensions.pretty_print    ${aItems}
+.. code::
 
-   Output:
+   rf.extensions.pretty_print    ${aItems}
 
-   .. code::
+Output:
 
-      INFO - [LIST] (4/1) > [STR]  :  'String'
-      INFO - [LIST] (4/2) > [INT]  :  25
-      INFO - [LIST] (4/3) > [BOOL]  :  True
-      INFO - [LIST] (4/4) > [NONE]  :  None
+.. code::
+
+   INFO - [LIST] (4/1) > [STR]  :  'String'
+   INFO - [LIST] (4/2) > [INT]  :  25
+   INFO - [LIST] (4/3) > [BOOL]  :  True
+   INFO - [LIST] (4/4) > [NONE]  :  None
        """
 
        # BuiltIn().log(f"This is {self.sThisModule}", "INFO") # debug
@@ -132,157 +138,143 @@ class Collection(object):
     @keyword
     def normalize_path(self, sPath=None, bWin=False, sReferencePathAbs=None, bConsiderBlanks=False, bExpandEnvVars=True, bMask=True):
        """
-**Keyword: normalize_path**
-   Normalizes local paths, paths to local network resources and internet addresses
+The ``normalize_path`` keyword normalizes local paths, paths to local network resources and internet addresses
 
-**Args:**
-   ``sPath``
-      :sep:`|` :aspect:`Condition:` required
-      :sep:`|` :aspect:`Type:` string
-      :sep:`|`
+**Arguments:**
 
-      The path to be normalized
+* ``sPath``
 
-   ``bWin``
-      :sep:`|` :aspect:`Condition:` optional
-      :sep:`|` :aspect:`Type:` boolean
-      :sep:`|` :aspect:`Default:` False
-      :sep:`|`
+  / *Condition*: required / *Type*: str /
 
-      If ``True`` then the returned path contains masked backslashes as separator, otherwise slashes
+  The path to be normalized
 
-   ``sReferencePathAbs``
-      :sep:`|` :aspect:`Condition:` optional
-      :sep:`|` :aspect:`Type:` string
-      :sep:`|` :aspect:`Default:` None
-      :sep:`|`
+* ``bWin``
 
-      In case of ``sPath`` is relative and ``sReferencePathAbs`` (expected to be absolute) is given, then
-      the returned absolute path is a join of both input paths
+  / *Condition*: optional / *Type*: bool / *Default*: False /
 
-   ``bConsiderBlanks``
-      :sep:`|` :aspect:`Condition:` optional
-      :sep:`|` :aspect:`Type:` boolean
-      :sep:`|` :aspect:`Default:` False
-      :sep:`|`
+  If ``True`` then the returned path contains masked backslashes as separator, otherwise slashes
 
-      If ``True`` then the returned path is encapsulated in quotes - in case of the path contains blanks
+* ``sReferencePathAbs``
 
-   ``bExpandEnvVars``
-      :sep:`|` :aspect:`Condition:` optional
-      :sep:`|` :aspect:`Type:` boolean
-      :sep:`|` :aspect:`Default:` True
-      :sep:`|`
+  / *Condition*: optional / *Type*: str / *Default*: None /
 
-      If ``True`` then in the returned path environment variables are resolved, otherwise not.
+  In case of ``sPath`` is relative and ``sReferencePathAbs`` (expected to be absolute) is given, then
+  the returned absolute path is a join of both input paths
 
-   ``bMask``
-      :sep:`|` :aspect:`Condition:` optional
-      :sep:`|` :aspect:`Type:` boolean
-      :sep:`|` :aspect:`Default:` True (requires ``bWin=True``)
-      :sep:`|`
+* ``bConsiderBlanks``
 
-      If ``bWin`` is ``True`` and ``bMask`` is ``True`` then the returned path contains masked backslashes as separator.
+  / *Condition*: optional / *Type*: bool / *Default*: False /
 
-      If ``bWin`` is ``True`` and ``bMask`` is ``False`` then the returned path contains single backslashes only - this might be
-      required for applications, that are not able to handle masked backslashes.
+  If ``True`` then the returned path is encapsulated in quotes - in case of the path contains blanks
 
-      In case of ``bWin`` is ``False`` ``bMask`` has no effect.
+* ``bExpandEnvVars``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
+
+  If ``True`` then in the returned path environment variables are resolved, otherwise not.
+
+* ``bMask``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True (requires ``bWin=True``) /
+
+  If ``bWin`` is ``True`` and ``bMask`` is ``True`` then the returned path contains masked backslashes as separator.
+
+  If ``bWin`` is ``True`` and ``bMask`` is ``False`` then the returned path contains single backslashes only - this might be
+  required for applications, that are not able to handle masked backslashes.
+
+  In case of ``bWin`` is ``False`` ``bMask`` has no effect.
 
 **Returns:**
-   ``sPath``
-      :sep:`|` :aspect:`Type:` string
-      :sep:`|`
 
-      The normalized path (is ``None`` in case of ``sPath`` is ``None``)
+* ``sPath``
 
-**Library import:**
-   The library containing the keyword definition can be imported in the following way:
+  / *Type*: str /
 
-   .. code::
-
-      Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
+  The normalized path (is ``None`` in case of ``sPath`` is ``None``)
 
 
 **Example 1:**
-   Variable containing a path with:
 
-   * different types of path separators
-   * redundant path separators (but backslashes have to be masked in the definition of the variable, this is *not* an unwanted redundancy)
-   * up-level references
+Variable containing a path with:
 
-   .. code::
+* different types of path separators
+* redundant path separators (but backslashes have to be masked in the definition of the variable, this is *not* an unwanted redundancy)
+* up-level references
 
-      set_test_variable    ${sPath}    C:\\\\subfolder1///../subfolder2\\\\\\\\../subfolder3\\\\
+.. code::
 
-   Printing the content of ``sPath`` shows how the path looks like when the masking of the backslashes is resolved:
+   set_test_variable    ${sPath}    C:\\\\subfolder1///../subfolder2\\\\\\\\../subfolder3\\\\
 
-   .. code::
+Printing the content of ``sPath`` shows how the path looks like when the masking of the backslashes is resolved:
 
-      C:\\subfolder1///../subfolder2\\\\../subfolder3\\
+.. code::
+
+   C:\\subfolder1///../subfolder2\\\\../subfolder3\\
 
 
-   Usage of the ``normalize_path`` keyword:
+Usage of the ``normalize_path`` keyword:
 
-   .. code::
+.. code::
 
-      ${sPath}    rf.extensions.normalize_path    ${sPath}
+   ${sPath}    rf.extensions.normalize_path    ${sPath}
 
-   Result (content of ``sPath``):
+Result (content of ``sPath``):
 
-   .. code::
+.. code::
 
-      C:/subfolder3
+   C:/subfolder3
 
-   In case we need the Windows version (with masked backslashes instead of slashes):
+In case we need the Windows version (with masked backslashes instead of slashes):
 
-   .. code::
+.. code::
 
-      ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}
+   ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}
 
-   Result (content of ``sPath``):
+Result (content of ``sPath``):
 
-   .. code::
+.. code::
 
-      C:\\\\subfolder3
+   C:\\\\subfolder3
 
-   The masking of backslashes can be deactivated:
+The masking of backslashes can be deactivated:
 
-   .. code::
+.. code::
 
-      ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}    bMask=${False}
+   ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}    bMask=${False}
 
-   Result (content of ``sPath``):
+Result (content of ``sPath``):
 
-   .. code::
+.. code::
 
-      C:\\subfolder3
+   C:\\subfolder3
 
 **Example 2:**
-   Variable containing a path of a local network resource:
 
-   .. code::
+Variable containing a path of a local network resource:
 
-      set_test_variable    ${sPath}    \\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
+.. code::
 
-   Result of normalization:
+   set_test_variable    ${sPath}    \\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
 
-   .. code::
+Result of normalization:
 
-      //anyserver.com/part1/part2/part3/part4
+.. code::
+
+   //anyserver.com/part1/part2/part3/part4
 
 **Example 3:**
-   Variable containing an internet address:
 
-   .. code::
+Variable containing an internet address:
 
-      set_test_variable    ${sPath}    http:\\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
+.. code::
 
-   Result of normalization:
+   set_test_variable    ${sPath}    http:\\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
 
-   .. code::
+Result of normalization:
 
-      http://anyserver.com/part1/part2/part3/part4
+.. code::
+
+   http://anyserver.com/part1/part2/part3/part4
        """
        sPath = CString.NormalizePath(sPath, bWin, sReferencePathAbs, bConsiderBlanks, bExpandEnvVars, bMask)
        return sPath
