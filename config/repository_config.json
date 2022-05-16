@@ -1,8 +1,8 @@
 {
    "REPOSITORYNAME" : "robotframework-extensions-collection",
    "PACKAGENAME" : "RobotframeworkExtensions",
-   "PACKAGEVERSION" : "0.3.0",
-   "PACKAGEDATE" : "13.05.2022",
+   "PACKAGEVERSION" : "0.3.1",
+   "PACKAGEDATE" : "16.05.2022",
    "AUTHOR" : "Holger Queckenstedt",
    "AUTHOREMAIL" : "Holger.Queckenstedt@de.bosch.com",
    "DESCRIPTION" : "Additional Robot Framework keywords",
