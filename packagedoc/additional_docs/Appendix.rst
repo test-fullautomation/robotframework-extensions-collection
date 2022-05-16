@@ -10,7 +10,7 @@
    Version             ###PACKAGEVERSION###
    Date                ###PACKAGEDATE###
    Description         ###DESCRIPTION###
-   Package URL         ###URL###
+   Package URL         `###REPOSITORYNAME### <###URL###>`_
    Author              ###AUTHOR###
    Email               ###AUTHOREMAIL###
    Language            ###PROGRAMMINGLANGUAGE###
@@ -21,4 +21,3 @@
    Intended audience   ###INTENDEDAUDIENCE###
    Topic               ###TOPIC###
    ==================  =========================
-
