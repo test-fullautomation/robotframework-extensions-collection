@@ -6,4 +6,4 @@ The goal behind these extensions is to have certain functionality available in b
 The *Robotframework Extensions Collection* requires an installed *Python Extensions Collection*, that can be found
 in this repository:
 
-https://github.com/test-fullautomation/python-extensions-collection
+   `python-extensions-collection <https://github.com/test-fullautomation/python-extensions-collection>`_
