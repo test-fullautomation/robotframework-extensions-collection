@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 06.04.2022
+# 20.05.2022
 #
 # **************************************************************************************************************
 
@@ -33,11 +33,8 @@ from PythonExtensionsCollection.String.CString import CString
 # **************************************************************************************************************
 
 class enFileStatiType:
-   """
-Class: enFileStatiType
-======================
-
-Enumeration class that defines values for file status.
+   """The class ``enFileStatiType`` defines the sollowing file states: ``closed``, ``openedforwriting``,
+``openedforappending`` and ``openedforreading``.
    """
    closed             = "closed"
    openedforwriting   = "openedforwriting"
@@ -48,9 +45,6 @@ Enumeration class that defines values for file status.
 
 class CFile(object):
    """
-Class: CFile
-============
-
 The class ``CFile`` provides a small set of file functions with extended parametrization (like switches
 defining if a file is allowed to be overwritten or not).
 
@@ -102,6 +96,9 @@ This makes the file handling more save against access violations.
    # TM***
 
    def __bIsFreeToUse(self, sFile=None):
+      """
+Checks if the file ``sFile`` is free to use, that means: not used by another instance of ``CFile``.
+      """
 
       bIsFreeToUse = False # init
       if sFile is None:
@@ -234,9 +231,6 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
 
    def Close(self):
       """
-Method: Close
--------------
-
 Closes the opened file.
 
 **Arguments:**
@@ -285,9 +279,6 @@ Closes the opened file.
 
    def Delete(self, bConfirmDelete=True):
       """
-Method: Delete
---------------
-
 Deletes the current file.
 
 **Arguments:**
@@ -410,9 +401,6 @@ Returns a list of strings (that will be written to file).
 
    def Write(self, Content="", nVSpaceAfter=0, sPrefix=None, bToScreen=False):
       """
-Method: Write
--------------
-
 Writes the content of a variable ``Content`` to file.
 
 **Arguments:**
@@ -496,9 +484,6 @@ Writes the content of a variable ``Content`` to file.
 
    def Append(self, Content="", nVSpaceAfter=0, sPrefix=None, bToScreen=False):
       """
-Method: Append
---------------
-
 Appends the content of a variable ``Content`` to file.
 
 **Arguments:**
@@ -595,9 +580,6 @@ Appends the content of a variable ``Content`` to file.
                  bRStrip         = True,
                  bToScreen       = False):
       """
-Method: ReadLines
------------------
-
 Reads content from current file. Returns an array of lines together with ``bSuccess`` and ``sResult`` (feedback).
 
 The method takes care of opening and closing the file. The complete file content is read by ``ReadLines`` in one step,
@@ -703,11 +685,6 @@ The logical join of all filter is: ``AND``.
 * ``bToScreen``
 
   / *Condition*: optional / *Type*: bool / *Default*: False /
-   ``bToScreen``
-      :sep:`|` :aspect:`Condition:` optional
-      :sep:`|` :aspect:`Type:` bool
-      :sep:`|` :aspect:`Default:` False
-      :sep:`|`
 
   If ``True``, the content read from file is also printed to screen, otherwise not.
       """
@@ -786,9 +763,6 @@ The logical join of all filter is: ``AND``.
 
    def GetFileInfo(self):
       """
-Method: GetFileInfo
--------------------
-
 Returns the following informations about the file (encapsulated within a dictionary ``dFileInfo``):
 
 **Returns:**
@@ -881,9 +855,6 @@ Returns the following informations about the file (encapsulated within a diction
 
    def CopyTo(self, sDestination=None, bOverwrite=False):
       """
-Method: CopyTo
---------------
-
 Copies the current file to ``sDestination``, that can either be a path without file name or a path together with a file name.
 
 In case of the destination file already exists and ``bOverwrite`` is ``True``, than the destination file will be overwritten.
@@ -1030,9 +1001,6 @@ and ``CopyTo`` returns ``bSuccess = False``.
 
    def MoveTo(self, sDestination=None, bOverwrite=False):
       """
-Method: MoveTo
---------------
-
 Moves the current file to ``sDestination``, that can either be a path without file name or a path together with a file name.
 
 **Arguments:**

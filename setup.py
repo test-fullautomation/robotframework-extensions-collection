@@ -158,6 +158,7 @@ if ( ('install' in listCmdArgs) or ('build' in listCmdArgs) or ('sdist' in listC
 
     print(COLBY + "Extended setup step 3/5: Deleting previous setup outputs (build, dist, <package name>.egg-info within repository)")
     print()
+
     nReturn = oExtendedSetup.delete_previous_build()
     if nReturn != SUCCESS:
         sys.exit(nReturn)

@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 06.04.2022
+# 20.05.2022
 #
 # **************************************************************************************************************
 
@@ -33,9 +33,6 @@ from dotdict import dotdict
 
 def PrettyPrint(oData=None, hOutputFile=None, bToConsole=True, nIndent=0, sPrefix=None, bHexFormat=False):
    """
-Function: PrettyPrint
-=====================
-
 Wrapper function to create and use a ``CTypePrint`` object. This wrapper function is responsible for
 printing out the content to console and to a file (depending on input parameter).
 
@@ -50,11 +47,15 @@ The idea behind the ``PrettyPrint`` function is to resolve also the content of c
 
 Example call:
 
-``PrettyPrint(oData)`` (*with oData is a Python variable of any type*)
+.. code:: python
+
+   PrettyPrint(oData)
+
+(*with oData is a Python variable of any type*)
 
 The output can e.g. look like this:
 
-::
+.. code:: python
 
    [DICT] (3/1) > {K1} [STR]  :  'Val1'
    [DICT] (3/2) > {K2} [LIST] (4/1) > [INT]  :  1
@@ -68,7 +69,9 @@ Every line of output has to be interpreted strictly from left to right.
 
 For example the meaning of the fifth line of output
 
-``[DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  9``
+.. code:: python
+
+   [DICT] (3/2) > {K2} [LIST] (4/4) > [TUPLE] (2/1) > [INT]  :  9
 
 is:
 
@@ -160,9 +163,6 @@ Types are encapsulated in square brackets, counter in round brackets and key nam
 
 class CTypePrint(object):
    """
-Class: CTypePrint
-=================
-
 The class ``CTypePrint`` provides a method (``TypePrint``) to compute the following data:
 
 * the type
@@ -192,9 +192,6 @@ The call of this method is encapsulated within the function ``PrettyPrint`` insi
 
    def TypePrint(self, oData=None, bHexFormat=False):
       """
-Method: TypePrint
------------------
-
 The method ``TypePrint`` computes details about the input variable ``oData``.
 
 **Arguments:**

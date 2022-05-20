@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 05.04.2022
+# 20.05.2022
 #
 # **************************************************************************************************************
 
@@ -31,10 +31,7 @@ import os, ntpath, re
 
 class CString(object):
    """
-Class: CString
-==============
-
-Contains some string computation methods like e.g. normalizing a path.
+The class ``CString`` contains some string computation methods like e.g. normalizing a path.
    """
 
    # --------------------------------------------------------------------------------------------------------------
@@ -42,9 +39,6 @@ Contains some string computation methods like e.g. normalizing a path.
 
    def NormalizePath(sPath=None, bWin=False, sReferencePathAbs=None, bConsiderBlanks=False, bExpandEnvVars=True, bMask=True):
       """
-Method: NormalizePath
----------------------
-
 Normalizes local paths, paths to local network resources and internet addresses
 
 **Arguments:**
@@ -227,9 +221,6 @@ Normalizes local paths, paths to local network resources and internet addresses
 
    def DetectParentPath(sStartPath=None, sFolderName=None, sFileName=None):
       """
-Method: DetectParentPath
-------------------------
-
 Computes the path to any parent folder inside a given path. Optionally DetectParentPath is able
 to search for files inside the parent folder.
 
@@ -284,6 +275,7 @@ to search for files inside the parent folder.
   / *Type*: list /
 
   Contains all positions of ``sFileName`` found inside ``listDestPaths``.
+
   ``listDestFiles`` is ``None`` (and not an empty list!) in case of ``sFileName`` is ``None`` and also in case of ``sFileName``
   is not found inside ``listDestPaths`` (and therefore also in case of ``sFolderName`` is not found inside ``sStartPath``).
 
@@ -402,9 +394,6 @@ to search for files inside the parent folder.
                     sExclRegEx        = None,
                     bDebug            = False):
       """
-Method: StringFilter
---------------------
-
 During the computation of strings there might occur the need to get to know if this string fulfils certain criteria or not.
 Such a criterion can e.g. be that the string contains a certain substring. Also an inverse logic might be required:
 In this case the criterion is that the string does **not** contain this substring.
@@ -564,7 +553,7 @@ Examples:
 
 1. Returns ``True``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "Speed is 25 beats per minute",
                 bCaseSensitive    = True,
@@ -581,7 +570,7 @@ Examples:
 
 2. Returns ``False``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "Speed is 25 beats per minute",
                 bCaseSensitive    = True,
@@ -598,7 +587,7 @@ Examples:
 
 3. Returns ``True``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "Speed is 25 beats per minute",
                 bCaseSensitive    = True,
@@ -615,7 +604,7 @@ Examples:
 
 4. Returns ``True``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "Speed is 25 beats per minute",
                 bCaseSensitive    = True,
@@ -632,7 +621,7 @@ Examples:
 
 5. Returns ``False``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "Speed is 25 beats per minute",
                 bCaseSensitive    = True,
@@ -649,7 +638,7 @@ Examples:
 
 6. Returns ``False``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "Speed is 25 beats per minute",
                 bCaseSensitive    = True,
@@ -666,7 +655,7 @@ Examples:
 
 7. Returns ``False``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "     ",
                 bCaseSensitive    = True,
@@ -683,7 +672,7 @@ Examples:
 
 8. Returns ``False``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "# Speed is 25 beats per minute",
                 bCaseSensitive    = True,
@@ -701,7 +690,7 @@ Examples:
 
 9. Returns ``False``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
                 bCaseSensitive    = True,
@@ -722,7 +711,7 @@ Therefore ``"   Alpha "`` cannot be found within the (shortened) input string.
 
 10. This alternative solution returns ``True``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "   Alpha is not beta; and beta is not gamma  ",
                 bCaseSensitive    = True,
@@ -740,7 +729,7 @@ Therefore ``"   Alpha "`` cannot be found within the (shortened) input string.
 
 11. Returns ``True``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
                 bCaseSensitive    = True,
@@ -762,7 +751,7 @@ The meaning of ``"beta\; not"`` in the following example is: The criterion is fu
 
 That's **not** ``True``. Therefore the method returns ``False``:
 
-::
+.. code:: python
 
    StringFilter(sString           = "Alpha is not beta; and beta is not gamma",
                 bCaseSensitive    = True,
@@ -1095,9 +1084,6 @@ That's **not** ``True``. Therefore the method returns ``False``:
 
    def FormatResult(sMethod="", bSuccess=True, sResult=""):
       """
-Method: FormatResult
---------------------
-
 Formats the result string ``sResult`` depending on ``bSuccess``:
 
 * ``bSuccess`` is ``True`` indicates *success*
