@@ -1,8 +1,6 @@
 {
    "REPOSITORYNAME" : "robotframework-extensions-collection",
    "PACKAGENAME" : "RobotframeworkExtensions",
-   "PACKAGEVERSION" : "0.3.4",
-   "PACKAGEDATE" : "20.05.2022",
    "AUTHOR" : "Holger Queckenstedt",
    "AUTHOREMAIL" : "Holger.Queckenstedt@de.bosch.com",
    "DESCRIPTION" : "Additional Robot Framework keywords",
@@ -16,5 +14,6 @@
    "INTENDEDAUDIENCE" : "Intended Audience :: Developers",
    "TOPIC" : "Topic :: Software Development",
    "INSTALLREQUIRES" : ["pypandoc","colorama","PythonExtensionsCollection","GenPackageDoc"],
+   "PACKAGEDATA" : ["*.pdf"],
    "PACKAGEDOC" : "./packagedoc"
 }

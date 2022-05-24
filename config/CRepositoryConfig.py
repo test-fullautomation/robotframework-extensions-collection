@@ -29,7 +29,7 @@
 # 
 # --------------------------------------------------------------------------------------------------------------
 #
-# 09.05.2022
+# 24.05.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -38,6 +38,9 @@ import colorama as col
 import pypandoc
 
 from PythonExtensionsCollection.String.CString import CString
+
+from RobotframeworkExtensions.version import VERSION # ! here wee need the package name hard coded !
+from RobotframeworkExtensions.version import DATE    # ! here wee need the package name hard coded !
 
 col.init(autoreset=True)
 COLBR = col.Style.BRIGHT + col.Fore.RED
@@ -70,8 +73,12 @@ class CRepositoryConfig():
         self.__dictRepositoryConfig = json.load(hRepositoryConfigurationFile)
         hRepositoryConfigurationFile.close()
 
-        # make absolute path
+        # make absolute path to package documentation
         self.__dictRepositoryConfig['PACKAGEDOC'] = CString.NormalizePath(f"{self.__sReferencePath}/{self.__dictRepositoryConfig['PACKAGEDOC']}")
+
+        # add version and date of the package this repository configuration belongs to
+        self.__dictRepositoryConfig['PACKAGEVERSION'] = VERSION
+        self.__dictRepositoryConfig['PACKAGEDATE']    = DATE
 
         # add further infos
         # (to have the possibility to print out all values with help of 'PrintConfig()')
@@ -123,7 +130,7 @@ class CRepositoryConfig():
         self.__dictRepositoryConfig['PYTHONVERSION']          = sPythonVersion
         self.__dictRepositoryConfig['INSTALLEDPACKAGEFOLDER'] = sInstalledPackageFolder
 
-        # ---- paths relative to repository root folder (where the srcipts are located that use this module)
+        # ---- paths relative to repository root folder (where the scripts are located that use this module)
 
         # ====== 1. documentation
 

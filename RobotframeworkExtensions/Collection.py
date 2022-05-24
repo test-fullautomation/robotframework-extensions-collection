@@ -34,11 +34,14 @@ from robot.libraries.BuiltIn import BuiltIn
 from PythonExtensionsCollection.Utils.CUtils import *
 from PythonExtensionsCollection.String.CString import CString
 
+from RobotframeworkExtensions.version import VERSION
+from RobotframeworkExtensions.version import DATE
+
 # --------------------------------------------------------------------------------------------------------------
 
 sThisModuleName    = "Collection.py"
-sThisModuleVersion = "0.3.0"      # should be aligned with repository_config.json
-sThisModuleDate    = "13.05.2022" # should be aligned with repository_config.json
+sThisModuleVersion = VERSION
+sThisModuleDate    = DATE
 sThisModule        = sThisModuleName + " v. " + sThisModuleVersion + " / " + sThisModuleDate
 
 # --------------------------------------------------------------------------------------------------------------

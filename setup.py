@@ -60,7 +60,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 10.05.2022
+# 24.05.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -209,7 +209,7 @@ setuptools.setup(
         'install': ExtendedInstallCommand,
     },
     install_requires = oRepositoryConfig.Get('INSTALLREQUIRES'),
-    package_data={f"{oRepositoryConfig.Get('PACKAGENAME')}" : ['*.pdf']},
+    package_data={f"{oRepositoryConfig.Get('PACKAGENAME')}" : oRepositoryConfig.Get('PACKAGEDATA')},
 )
 
 # --------------------------------------------------------------------------------------------------------------
