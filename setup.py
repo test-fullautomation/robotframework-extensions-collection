@@ -60,7 +60,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 10.05.2022
+# 24.05.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -158,6 +158,7 @@ if ( ('install' in listCmdArgs) or ('build' in listCmdArgs) or ('sdist' in listC
 
     print(COLBY + "Extended setup step 3/5: Deleting previous setup outputs (build, dist, <package name>.egg-info within repository)")
     print()
+
     nReturn = oExtendedSetup.delete_previous_build()
     if nReturn != SUCCESS:
         sys.exit(nReturn)
@@ -208,7 +209,7 @@ setuptools.setup(
         'install': ExtendedInstallCommand,
     },
     install_requires = oRepositoryConfig.Get('INSTALLREQUIRES'),
-    package_data={f"{oRepositoryConfig.Get('PACKAGENAME')}" : ['*.pdf']},
+    package_data={f"{oRepositoryConfig.Get('PACKAGENAME')}" : oRepositoryConfig.Get('PACKAGEDATA')},
 )
 
 # --------------------------------------------------------------------------------------------------------------
