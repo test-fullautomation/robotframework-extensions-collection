@@ -5,7 +5,7 @@
 # With the help of a LaTeX compiler the tex files can be converted into a PDF file.
 # This json file contains the required settings.
 #
-# 19.05.2022
+# 31.05.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -25,7 +25,10 @@
                 "INCLUDEPRIVATE"      : false,
                 # if true: also classes and methods without docstring are listed in the documentation (together with a hint
                 # that information is not available), otherwise they are skipped
-                "INCLUDEUNDOCUMENTED" : true
+                "INCLUDEUNDOCUMENTED" : true,
+                # if 'STRICT' is true: missing LaTeX compiler causes an error; otherwise PDF generation is handled as option
+                # and a missing LaTeX compiler does not cause an error
+                "STRICT" : false
                },
 
 # Section "TOC":

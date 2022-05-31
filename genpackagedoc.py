@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# Initial version 04/2021
+# 31.05.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -34,6 +34,7 @@ import colorama as col
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "./additions")))
 
 from config.CRepositoryConfig import CRepositoryConfig # providing repository and environment specific information
+from GenPackageDoc.CPackageDocConfig import CPackageDocConfig
 from GenPackageDoc.CDocBuilder import CDocBuilder
 
 col.init(autoreset=True)
@@ -65,9 +66,19 @@ except Exception as ex:
     print()
     sys.exit(ERROR)
 
+# -- setting up the GenPackageDoc configuration
+oGenPackageDocConfig = None
+try:
+    oPackageDocConfig = CPackageDocConfig(oRepositoryConfig)
+except Exception as ex:
+    print()
+    printexception(str(ex))
+    print()
+    sys.exit(ERROR)
+
 # -- setting up and calling the doc builder
 try:
-    oDocBuilder = CDocBuilder(oRepositoryConfig)
+    oDocBuilder = CDocBuilder(oPackageDocConfig)
 except Exception as ex:
     print()
     printexception(str(ex))
