@@ -1,3 +1,5 @@
+# **************************************************************************************************************
+#
 #  Copyright 2020-2022 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,6 +13,18 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
+#
+# **************************************************************************************************************
+#
+# Collection.py
+#
+# XC-CT/ECA3-Queckenstedt
+#
+# --------------------------------------------------------------------------------------------------------------
+#
+# 02.06.2022
+#
+# --------------------------------------------------------------------------------------------------------------
 
 """
 The Collection module is the interface between the Python Extensions Collection and the Robotframework.
@@ -35,13 +49,13 @@ from PythonExtensionsCollection.Utils.CUtils import *
 from PythonExtensionsCollection.String.CString import CString
 
 from RobotframeworkExtensions.version import VERSION
-from RobotframeworkExtensions.version import DATE
+from RobotframeworkExtensions.version import VERSION_DATE
 
 # --------------------------------------------------------------------------------------------------------------
 
 sThisModuleName    = "Collection.py"
 sThisModuleVersion = VERSION
-sThisModuleDate    = DATE
+sThisModuleDate    = VERSION_DATE
 sThisModule        = sThisModuleName + " v. " + sThisModuleVersion + " / " + sThisModuleDate
 
 # --------------------------------------------------------------------------------------------------------------

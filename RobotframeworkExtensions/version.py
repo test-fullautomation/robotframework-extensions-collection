@@ -18,6 +18,6 @@
 #
 # Version and date of RobotframeworkExtensions
 #
-VERSION = "0.5.0"
-DATE    = "31.05.2022"
+VERSION      = "0.6.0"
+VERSION_DATE = "02.06.2022"
 
