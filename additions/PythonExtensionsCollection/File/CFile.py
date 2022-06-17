@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 20.05.2022
+# 17.06.2022
 #
 # **************************************************************************************************************
 
@@ -33,8 +33,13 @@ from PythonExtensionsCollection.String.CString import CString
 # **************************************************************************************************************
 
 class enFileStatiType:
-   """The class ``enFileStatiType`` defines the sollowing file states: ``closed``, ``openedforwriting``,
-``openedforappending`` and ``openedforreading``.
+   """
+The class ``enFileStatiType`` defines the sollowing file states:
+
+* ``closed``
+* ``openedforwriting``
+* ``openedforappending``
+* ``openedforreading``
    """
    closed             = "closed"
    openedforwriting   = "openedforwriting"
@@ -122,7 +127,7 @@ Opens a text file for writing.
 Returns ``bSuccess`` and ``sResult`` (feedback).
       """
 
-      sMethod = "CFile::__OpenForWriting"
+      sMethod = "CFile.__OpenForWriting"
 
       if self.__sFile is None:
          bSuccess = False
@@ -144,8 +149,8 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
          self.Close()
          bSuccess = None
          sResult  = f"Not possible to open file '{self.__sFile}' for writing.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def __OpenForWriting(self):
@@ -160,7 +165,7 @@ Opens a text file for appending.
 Returns ``bSuccess`` and ``sResult`` (feedback).
       """
 
-      sMethod = "CFile::__OpenForAppending"
+      sMethod = "CFile.__OpenForAppending"
 
       if self.__sFile is None:
          bSuccess = False
@@ -182,8 +187,8 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
          self.Close()
          bSuccess = None
          sResult  = f"Not possible to open file '{self.__sFile}' for appending.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def __OpenForAppending(self):
@@ -198,7 +203,7 @@ Opens a text file for reading.
 Returns ``bSuccess`` and ``sResult`` (feedback).
       """
 
-      sMethod = "CFile::__OpenForReading"
+      sMethod = "CFile.__OpenForReading"
 
       if self.__sFile is None:
          bSuccess = False
@@ -220,8 +225,8 @@ Returns ``bSuccess`` and ``sResult`` (feedback).
          self.Close()
          bSuccess = None
          sResult  = f"Not possible to open file '{self.__sFile}' for reading.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def __OpenForReading(self):
@@ -243,15 +248,15 @@ Closes the opened file.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
-      sMethod = "CFile::Close"
+      sMethod = "CFile.Close"
 
       if self.__oFileHandle is not None:
          try:
@@ -262,6 +267,7 @@ Closes the opened file.
          except Exception as reason:
             bSuccess = None
             sResult  = f"Exception while closing file '{self.__sFile}'.\nReason: " + str(reason)
+            sResult = CString.FormatResult(sMethod, bSuccess, sResult)
          self.__oFileHandle = None
       else:
          bSuccess = True
@@ -269,7 +275,6 @@ Closes the opened file.
 
       self.__oFileStatus = enFileStatiType.closed
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def Close(self):
@@ -299,16 +304,16 @@ Deletes the current file.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
 
-      sMethod = "CFile::Delete"
+      sMethod = "CFile.Delete"
 
       if self.__sFile is None:
          bSuccess = False
@@ -322,7 +327,6 @@ Deletes the current file.
          else:
             bSuccess = True
          sResult = f"Nothing to delete. The file '{self.__sFile}' does not exist."
-         sResult = CString.FormatResult(sMethod, bSuccess, sResult)
          return bSuccess, sResult
 
       bSuccess, sResult = self.Close()
@@ -337,8 +341,8 @@ Deletes the current file.
       except Exception as reason:
          bSuccess = None
          sResult  = f"Exception while deleting file '{self.__sFile}'.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def Delete(self, bConfirmDelete=True):
@@ -435,16 +439,16 @@ Writes the content of a variable ``Content`` to file.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
 
-      sMethod = "CFile::Write"
+      sMethod = "CFile.Write"
 
       if self.__oFileStatus != enFileStatiType.openedforwriting:
          bSuccess, sResult = self.__OpenForWriting()
@@ -473,8 +477,8 @@ Writes the content of a variable ``Content`` to file.
       except Exception as reason:
          bSuccess = None
          sResult  = f"Not possible to write to file '{self.__sFile}'.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def Write(self, Content="", nVSpaceAfter=0, sPrefix=None, bToScreen=False):
@@ -518,15 +522,15 @@ Appends the content of a variable ``Content`` to file.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
-      sMethod = "CFile::Append"
+      sMethod = "CFile.Append"
 
       if self.__oFileStatus != enFileStatiType.openedforappending:
          bSuccess, sResult = self.__OpenForAppending()
@@ -555,8 +559,8 @@ Appends the content of a variable ``Content`` to file.
       except Exception as reason:
          bSuccess = None
          sResult  = f"Not possible to append to file '{self.__sFile}'.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def Append(self, Content="", nVSpaceAfter=0, sPrefix=None, bToScreen=False):
@@ -689,7 +693,7 @@ The logical join of all filter is: ``AND``.
   If ``True``, the content read from file is also printed to screen, otherwise not.
       """
 
-      sMethod = "[CFile::ReadLines]"
+      sMethod = "CFile.ReadLines"
 
       listLines = []
 
@@ -753,7 +757,6 @@ The logical join of all filter is: ``AND``.
 
       bSuccess = True
       sResult  = f"Read {nNrOfLines} lines from '{self.__sFile}'."
-      sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
       return listLines, bSuccess, sResult
 
    # eof def ReadLines(...)
@@ -811,7 +814,7 @@ Returns the following informations about the file (encapsulated within a diction
   ``True`` if file path is existing, otherwise ``False``
       """
 
-      sMethod = "CFile::GetFileInfo"
+      sMethod = "CFile.GetFileInfo"
 
       dFileInfo = {}
       dFileInfo['sFile']               = None
@@ -884,15 +887,15 @@ and ``CopyTo`` returns ``bSuccess = False``.
 
   / *Type*: bool /
 
-  Indicates if the computation of the method ``sMethod`` was successful or not.
+  Indicates if the computation of the method was successful or not.
 
 * ``sResult``
 
   / *Type*: str /
 
-  The result of the computation of the method ``sMethod``.
+  The result of the computation of the method.
       """
-      sMethod = "CFile::CopyTo"
+      sMethod = "CFile.CopyTo"
 
       if self.__sFile is None:
          bSuccess = False
@@ -990,8 +993,8 @@ and ``CopyTo`` returns ``bSuccess = False``.
       except Exception as reason:
          bSuccess = None
          sResult  = f"Exception while copying file '{self.__sFile}' to '{sDestFile}'.\nReason: " + str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
 
-      sResult = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def CopyTo(self, sDestination=None, bOverwrite=False):
@@ -1033,7 +1036,7 @@ Moves the current file to ``sDestination``, that can either be a path without fi
 
   Contains details about what happens during computation
       """
-      sMethod = "CFile::MoveTo"
+      sMethod = "CFile.MoveTo"
 
       bSuccess, sResult = self.CopyTo(sDestination, bOverwrite)
       if bSuccess is not True:
@@ -1054,7 +1057,6 @@ Moves the current file to ``sDestination``, that can either be a path without fi
 
       bSuccess = True
       sResult  = f"File moved from '{self.__sFile}' to '{self.__sLastDestination}'"
-      sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
       return bSuccess, sResult
 
    # eof def MoveTo(self, sDestination=None, bOverwrite=False):

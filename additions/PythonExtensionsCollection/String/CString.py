@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 20.05.2022
+# 02.06.2022
 #
 # **************************************************************************************************************
 
@@ -546,7 +546,7 @@ The following filters are available:
 
   / *Type*: bool /
 
-  Final statement about the input string ``sString`` after filter compotation
+  Final statement about the input string ``sString`` after filter computation
 
 Examples:
 ~~~~~~~~~
@@ -745,7 +745,9 @@ Therefore ``"   Alpha "`` cannot be found within the (shortened) input string.
                 sExclRegEx        = None)
 
 The meaning of ``"beta; and"`` is: The criterion is fulfilled in case of either ``"beta"`` or ``" and"`` can be found. That's ``True`` in this example - but this
-has nothing to do with the fact, that also this string ``"beta; and"`` can be found. A semicolon that shall be part of the search, has to be masked!
+has nothing to do with the fact, that also this string ``"beta; and"`` can be found. Here the semikolon is a separator character and therefore part of the syntax.
+
+A semicolon that shall be part of the search string, has to be masked with '``\;``'!
 
 The meaning of ``"beta\; not"`` in the following example is: The criterion is fulfilled in case of ``"beta; not"`` can be found.
 
