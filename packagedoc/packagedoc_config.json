@@ -5,7 +5,7 @@
 # With the help of a LaTeX compiler the tex files can be converted into a PDF file.
 # This json file contains the required settings.
 #
-# 31.05.2022
+# 17.06.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -21,10 +21,10 @@
 # Contains parameter to control the application behavior in general.
 
    "CONTROL" : {
-                # if false: private methods are skipped, otherwise they are included in documentation
+                # if 'INCLUDEPRIVATE' is false: private methods are skipped, otherwise they are included in documentation
                 "INCLUDEPRIVATE"      : false,
-                # if true: also classes and methods without docstring are listed in the documentation (together with a hint
-                # that information is not available), otherwise they are skipped
+                # if 'INCLUDEUNDOCUMENTED' is true: also classes and methods without docstring are listed in the documentation;
+                # otherwise they are skipped
                 "INCLUDEUNDOCUMENTED" : true,
                 # if 'STRICT' is true: missing LaTeX compiler causes an error; otherwise PDF generation is handled as option
                 # and a missing LaTeX compiler does not cause an error
@@ -35,6 +35,8 @@
 # --------------
 # Defines the content of the PDF document (= the order of the chapters).
 # A chapter can be represented by an additional text file in rst format. Every rst file is a separate chapter
+# within the resulting PDF document.
+# A chapter can also be represented by an additional tex file. Every tex file is a separate chapter
 # within the resulting PDF document.
 # In case of Python modules are involved, every Python module is a chapter.
 # Class and function definitions within a Python module are subchapters. Methods of classes are subsubchapters.
@@ -61,9 +63,10 @@
 # In this section a user has the ability to define own runtime variables, that are accessible within the doctrings of involved Python modules
 # and also within separate rst files. Key names have to be written in small letters to indicate that they are user defined.
 # Values can be either hard coded or taken over from the repository configuration (see config/repository_config.json).
-# In second case the key name has to be encaplulated within three hashes '#'. The same notation can be used in rst files and doctrings
+# In second case the key name has to be encapsulated within three hashes '#'. The same notation can be used in rst files and doctrings
 # of Python modules (for example adding an additional hint within a doctring of a class: ###additional_hint###).
 # This mechanism is limited to strings!
+# This key is optional. In case of own parameters are not needed, this key can be removed or set to null.
 
    # "PARAMS" : {
                  # "" : "",
@@ -88,6 +91,8 @@
 # Additional rst files may import pictures. GenPackageDoc needs to know where to find them.
 # To keep the relative paths to possibly imported pictures valid also within the created tex files,
 # this pictures folder will be copied into the output folder defined by key "OUTPUT".
+# This key is optional. In case of there are no pictures needed in this package description,
+# this key can be removed or set to null.
 
    "PICTURES" : "./additional_docs/pictures",
 
@@ -101,6 +106,8 @@
 # -----------------
 # Defines the path to a folder in which the PDF file will be copied after creation
 # (the "OUTPUT" folder in which the LaTeX compiler creates the PDF file, is not really a proper destination finally)
+# This key is optional. In case of it is not required to copy the PDF file to another location,
+# this key can be removed or set to null.
 
    "PDFDEST" : "../###PACKAGENAME###",
 
@@ -110,7 +117,6 @@
 # GenPackageDoc needs to know where to find LaTeX. Because the path to the LaTeX interpreter depends
 # on the operating system, this path has to be defined separately for every supported operating system
 # (currently "WINDOWS" and "LINUX").
-# In opposite to the previous statement these paths have to be absolute (recommended: usage of environment variables).
 # Example:
 
    "TEX" : {
