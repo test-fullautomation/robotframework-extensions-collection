@@ -5,7 +5,7 @@
 # With the help of a LaTeX compiler the tex files can be converted into a PDF file.
 # This json file contains the required settings.
 #
-# 17.06.2022
+# 21.06.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -94,7 +94,7 @@
 # This key is optional. In case of there are no pictures needed in this package description,
 # this key can be removed or set to null.
 
-   "PICTURES" : "./additional_docs/pictures",
+   # "PICTURES" : "./additional_docs/pictures",
 
 # Section "OUTPUT":
 # -----------------

@@ -60,7 +60,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 24.05.2022
+# 24.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -175,8 +175,10 @@ if ( ('install' in listCmdArgs) or ('build' in listCmdArgs) or ('sdist' in listC
         if nReturn != SUCCESS:
             sys.exit(nReturn)
 
-    with open("README.md", "r", encoding="utf-8") as fh:
+    README_MD = str(oRepositoryConfig.Get('README_MD'))
+    with open(README_MD, "r", encoding="utf-8") as fh:
         long_description = fh.read()
+    fh.close()
 
 # --------------------------------------------------------------------------------------------------------------
 
