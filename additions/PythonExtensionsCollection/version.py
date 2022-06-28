@@ -16,8 +16,8 @@
 #
 # **************************************************************************************************************
 #
-# Version and date of RobotframeworkExtensions
+# Version and date of PythonExtensionsCollection
 #
-VERSION      = "0.7.0"
+VERSION      = "0.8.0"
 VERSION_DATE = "28.06.2022"
 
