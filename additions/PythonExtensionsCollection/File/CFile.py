@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 17.06.2022
+# 27.06.2022
 #
 # **************************************************************************************************************
 
@@ -985,6 +985,7 @@ and ``CopyTo`` returns ``bSuccess = False``.
                sResult  = f"Exception while deleting destination file '{sDestFile}'.\nReason: " + str(reason)
                sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
                return bSuccess, sResult
+      # eof if bDeleteDestFile is True:
 
       try:
          shutil.copyfile(self.__sFile, sDestFile)

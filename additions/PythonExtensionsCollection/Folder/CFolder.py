@@ -20,7 +20,7 @@
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# 17.06.2022
+# 28.06.2022
 #
 # **************************************************************************************************************
 
@@ -111,9 +111,98 @@ Checks if the folder ``sFolder`` is free to use, that means: not used by another
    # --------------------------------------------------------------------------------------------------------------
    # TM***
 
+   def __Delete(self, sFolder=None, bConfirmDelete=True):
+      """
+Deletes the folder ``sFolder``.
+
+**Arguments:**
+
+* ``sFolder``
+
+  / *Condition*: required / *Type*: str /
+
+  Path and name of folder to be deleted
+
+* ``bConfirmDelete``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
+
+  Defines if it will be handled as error if the folder does not exist.
+
+  If ``True``: If the folder does not exist, the method indicates an error (``bSuccess = False``).
+
+  If ``False``: It doesn't matter if the folder exists or not.
+
+**Returns:**
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation of the method was successful or not.
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The result of the computation of the method.
+      """
+      sMethod = "CFolder.__Delete"
+
+      if sFolder is None:
+         bSuccess = False
+         sResult  = "sFolder is None; please provide path and name of a folder when creating a CFolder object."
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, sResult
+
+      if os.path.isdir(sFolder) is False:
+         sResult = f"Nothing to delete. The folder '{sFolder}' does not exist."
+         if bConfirmDelete is True:
+            bSuccess = False
+            sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         else:
+            bSuccess = True
+         return bSuccess, sResult
+      # eof if os.path.isdir(sFolder) is False:
+
+      bSuccess    = False
+      sResult     = "UNKNOWN"
+      nCntTries   = 1
+      nTriesMax   = 4
+      nDelay      = 2 # sec
+      listResults = []
+      while nCntTries <= nTriesMax:
+         try:
+            print(f"Trying to delete '{sFolder}'")
+            print()
+            shutil.rmtree(sFolder, ignore_errors=False, onerror=rm_dir_readonly)
+         except Exception as reason:
+            listResults.append(str(reason))
+         if os.path.isdir(sFolder) is True:
+            sResult = f"({nCntTries}/{nTriesMax}) Problem with deleting the folder '{sFolder}'. Folder still present."
+            listResults.append(sResult)
+            time.sleep(nDelay) # delay before next try
+         else:
+            bSuccess = True
+            sResult  = f"Folder '{sFolder}' deleted."
+            break
+         nCntTries = nCntTries + 1
+      # eof while nCntTries <= nTriesMax:
+
+      if bSuccess is False:
+         sResult = "\n".join(listResults)
+         sResult = CString.FormatResult(sMethod, bSuccess, sResult)
+
+      return bSuccess, sResult
+
+   # eof def __Delete(self, sFolder=None, bConfirmDelete=True):
+
+   # --------------------------------------------------------------------------------------------------------------
+   # TM***
+
    def Delete(self, bConfirmDelete=True):
       """
-Deletes the current folder ``sFolder``.
+Deletes the folder the current class instance contains.
 
 **Arguments:**
 
@@ -142,50 +231,9 @@ Deletes the current folder ``sFolder``.
   The result of the computation of the method.
       """
       sMethod = "CFolder.Delete"
-
-      if self.__sFolder is None:
-         bSuccess = False
-         sResult  = "self.__sFolder is None; please provide path and name of a folder when creating a CFolder object."
-         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
-         return bSuccess, sResult
-
-      if os.path.isdir(self.__sFolder) is False:
-         sResult = f"Nothing to delete. The folder '{self.__sFolder}' does not exist."
-         if bConfirmDelete is True:
-            bSuccess = False
-            sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
-         else:
-            bSuccess = True
-         return bSuccess, sResult
-      # eof if os.path.isdir(self.__sFolder) is False:
-
-      bSuccess    = False
-      sResult     = "UNKNOWN"
-      nCntTries   = 1
-      nTriesMax   = 4
-      nDelay      = 2 # sec
-      listResults = []
-      while nCntTries <= nTriesMax:
-         try:
-            print(f"Trying to delete '{self.__sFolder}'")
-            shutil.rmtree(self.__sFolder, ignore_errors=False, onerror=rm_dir_readonly)
-         except Exception as reason:
-            listResults.append(str(reason))
-         if os.path.isdir(self.__sFolder) is True:
-            sResult = f"({nCntTries}/{nTriesMax}) Problem with deleting the folder '{self.__sFolder}'. Folder still present."
-            listResults.append(sResult)
-            time.sleep(nDelay) # delay before next try
-         else:
-            bSuccess = True
-            sResult  = f"Folder '{self.__sFolder}' deleted."
-            break
-         nCntTries = nCntTries + 1
-      # eof while nCntTries <= nTriesMax:
-
-      if bSuccess is False:
-         sResult = "\n".join(listResults)
+      bSuccess, sResult = self.__Delete(self.__sFolder, bConfirmDelete)
+      if bSuccess is not True:
          sResult = CString.FormatResult(sMethod, bSuccess, sResult)
-
       return bSuccess, sResult
 
    # eof def Delete(self, bConfirmDelete=True):
@@ -241,8 +289,8 @@ Creates the current folder ``sFolder``.
       if os.path.isdir(self.__sFolder) is True:
          if bOverwrite is True:
             bSuccess, sResult = self.Delete()
-            if bSuccess is False:
-               sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+            if bSuccess is not True:
+               sResult = CString.FormatResult(sMethod, bSuccess, sResult)
                return bSuccess, sResult
             bCreateFolder = True
          else:
@@ -263,6 +311,7 @@ Creates the current folder ``sFolder``.
          while nCntTries <= nTriesMax:
             try:
                print(f"Trying to create '{self.__sFolder}'")
+               print()
                if bRecursive is True:
                   os.makedirs(self.__sFolder)
                else:
@@ -289,6 +338,122 @@ Creates the current folder ``sFolder``.
       return bSuccess, sResult
 
    # eof def Create(self, bOverwrite=False, bRecursive=False):
+
+   # --------------------------------------------------------------------------------------------------------------
+   # TM***
+
+   def CopyTo(self, sDestination=None, bOverwrite=False):
+      """
+Copies the current folder to ``sDestination``, that has to be a path to a folder **within** the source folder will be copied to
+(with it's original name),
+
+In case of the destination folder already exists and ``bOverwrite`` is ``True``, than the destination folder will be overwritten.
+
+In case of the destination folder already exists and ``bOverwrite`` is ``False`` (default), than the destination folder will not be overwritten
+and ``CopyTo`` returns ``bSuccess = False``.
+
+**Arguments:**
+
+* ``sDestination``
+
+  / *Condition*: required / *Type*: string /
+
+  The path to destination folder
+
+* ``bOverwrite``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  * In case of the destination folder already exists and ``bOverwrite`` is ``True``, than the destination folder will be overwritten.
+  * In case of the destination folder already exists and ``bOverwrite`` is ``False`` (default), than the destination folder will not be overwritten
+    and ``CopyTo`` returns ``bSuccess = False``.
+
+**Returns:**
+
+* ``bSuccess``
+
+  / *Type*: bool /
+
+  Indicates if the computation of the method was successful or not.
+
+* ``sResult``
+
+  / *Type*: str /
+
+  The result of the computation of the method.
+      """
+      sMethod = "CFolder.CopyTo"
+
+      if self.__sFolder is None:
+         bSuccess = False
+         sResult  = "self.__sFolder is None; please provide path and name of a folder when creating a CFolder object."
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, sResult
+
+      if os.path.isdir(self.__sFolder) is False:
+         bSuccess = False
+         sResult  = f"The folder '{self.__sFolder}' does not exist, therefore nothing can be copied."
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, sResult
+
+      if sDestination is None:
+         bSuccess = False
+         sResult  = "sDestination is None; please provide a path to a destination folder."
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, sResult
+
+      sDestination = CString.NormalizePath(sDestination)
+
+      if os.path.isdir(sDestination) is False:
+         # the folder to be copied will be created within the destination folder, therefore we expect that the destination folder already exists
+         bSuccess = False
+         sResult  = f"The destination folder '{sDestination}' does not exist."
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, sResult
+
+      sSourceFolderName = os.path.basename(self.__sFolder)
+      sDestFolder = f"{sDestination}/{sSourceFolderName}"
+
+      if sDestFolder == self.__sFolder:
+         bSuccess = False
+         sResult  = f"Source folder and destination folder are the same: '{self.__sFolder}'. Therefore nothing to do."
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, sResult
+
+      if self.__bIsFreeToUse(sDestFolder) is False:
+         bSuccess = False
+         sResult  = f"The destination folder '{sDestFolder}' is already in use by another CFolder instance."
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+         return bSuccess, sResult
+
+      if os.path.isdir(sDestFolder) is True:
+         # destination folder already exists
+         if bOverwrite is True:
+            bSuccess, sResult = self.__Delete(sDestFolder)
+            if bSuccess is not True:
+               sResult = CString.FormatResult(sMethod, bSuccess, sResult)
+               return bSuccess, sResult
+         else:
+            bSuccess = False
+            sResult  = f"Not allowed to overwrite existing destination folder '{sDestFolder}'. Therefore nothing to do."
+            sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+            return bSuccess, sResult
+      # eof if os.path.isdir(sDestFolder) is True:
+
+      # analysis and preconditions done, now the action
+
+      try:
+         shutil.copytree(self.__sFolder, sDestFolder)
+         bSuccess = True
+         sResult  = "Folder copied from\n> '" + self.__sFolder + "'\nto\n> '" + sDestFolder + "'"
+      except Exception as reason:
+         bSuccess = None
+         sResult  = str(reason)
+         sResult  = CString.FormatResult(sMethod, bSuccess, sResult)
+
+      return bSuccess, sResult
+
+   # eof def CopyTo(self, sDestination=None, bOverwrite=False):
 
 # --------------------------------------------------------------------------------------------------------------
 
