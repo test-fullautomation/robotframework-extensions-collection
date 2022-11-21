@@ -5,7 +5,7 @@
 # With the help of a LaTeX compiler the tex files can be converted into a PDF file.
 # This json file contains the required settings.
 #
-# 18.11.2022
+# 21.11.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -21,8 +21,8 @@
 # Contains parameter to control the application behavior in general.
 
    "CONTROL" : {
-                # if 'INCLUDEPRIVATE' is false: private methods are skipped, otherwise they are included in documentation
-                "INCLUDEPRIVATE"      : false,
+                ## if 'INCLUDEPRIVATE' is false: private methods are skipped, otherwise they are included in documentation
+                ## 21.11.2022 feature temporarily not available # "INCLUDEPRIVATE"      : false,
                 # if 'INCLUDEUNDOCUMENTED' is true: also classes and methods without docstring are listed in the documentation;
                 # otherwise they are skipped
                 "INCLUDEUNDOCUMENTED" : true,
