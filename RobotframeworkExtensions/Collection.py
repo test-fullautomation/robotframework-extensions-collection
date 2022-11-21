@@ -22,12 +22,12 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 02.06.2022
+# 21.11.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
 """
-The Collection module is the interface between the Python Extensions Collection and the Robotframework.
+The Collection module is the interface between the PythonExtensionsCollection and the Robot Framework.
 
 This library containing the keyword definitions, can be imported in the following way:
 
@@ -86,9 +86,14 @@ class Collection(object):
        """
 The ``pretty_print`` keyword logs the content of parameters of any Python data type (input: ``oData``).
 
-Simple data types are logged directly. Composite data types are resolved before logging.
+Simple data types are logged directly. Composite data types are resolved before.
 
-The output contains for every parameter: the value, the type and counter values (in case of composite data types).
+The output contains for every parameter:
+
+* the type
+* the total number of elements inside (e.g. the number of keys inside a dictionary)
+* the counter number of the current element
+* the value
 
 The trace level for output is ``INFO``.
 
@@ -109,33 +114,6 @@ The output is also returned as list of strings.
   / *Type*: list /
 
   List of strings containing the resolved data structure of ``oData`` (same content as printed to console).
-
-
-**Example:**
-
-Variable of Python type ``list``:
-
-.. code::
-
-   set_test_variable    @{aItems}    String
-   ...                               ${25}
-   ...                               ${True}
-   ...                               ${None}
-
-Call of ``pretty_print`` keyword:
-
-.. code::
-
-   rf.extensions.pretty_print    ${aItems}
-
-Output:
-
-.. code::
-
-   INFO - [LIST] (4/1) > [STR]  :  'String'
-   INFO - [LIST] (4/2) > [INT]  :  25
-   INFO - [LIST] (4/3) > [BOOL]  :  True
-   INFO - [LIST] (4/4) > [NONE]  :  None
        """
 
        # BuiltIn().log(f"This is {self.sThisModule}", "INFO") # debug
@@ -208,90 +186,6 @@ The ``normalize_path`` keyword normalizes local paths, paths to local network re
   / *Type*: str /
 
   The normalized path (is ``None`` in case of ``sPath`` is ``None``)
-
-
-**Example 1:**
-
-Variable containing a path with:
-
-* different types of path separators
-* redundant path separators (but backslashes have to be masked in the definition of the variable, this is *not* an unwanted redundancy)
-* up-level references
-
-.. code::
-
-   set_test_variable    ${sPath}    C:\\\\subfolder1///../subfolder2\\\\\\\\../subfolder3\\\\
-
-Printing the content of ``sPath`` shows how the path looks like when the masking of the backslashes is resolved:
-
-.. code::
-
-   C:\\subfolder1///../subfolder2\\\\../subfolder3\\
-
-
-Usage of the ``normalize_path`` keyword:
-
-.. code::
-
-   ${sPath}    rf.extensions.normalize_path    ${sPath}
-
-Result (content of ``sPath``):
-
-.. code::
-
-   C:/subfolder3
-
-In case we need the Windows version (with masked backslashes instead of slashes):
-
-.. code::
-
-   ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}
-
-Result (content of ``sPath``):
-
-.. code::
-
-   C:\\\\subfolder3
-
-The masking of backslashes can be deactivated:
-
-.. code::
-
-   ${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}    bMask=${False}
-
-Result (content of ``sPath``):
-
-.. code::
-
-   C:\\subfolder3
-
-**Example 2:**
-
-Variable containing a path of a local network resource:
-
-.. code::
-
-   set_test_variable    ${sPath}    \\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
-
-Result of normalization:
-
-.. code::
-
-   //anyserver.com/part1/part2/part3/part4
-
-**Example 3:**
-
-Variable containing an internet address:
-
-.. code::
-
-   set_test_variable    ${sPath}    http:\\\\\\\\anyserver.com\\\\part1//part2\\\\\\\\part3/part4
-
-Result of normalization:
-
-.. code::
-
-   http://anyserver.com/part1/part2/part3/part4
        """
        sPath = CString.NormalizePath(sPath, bWin, sReferencePathAbs, bConsiderBlanks, bExpandEnvVars, bMask)
        return sPath

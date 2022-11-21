@@ -1,0 +1,246 @@
+% --------------------------------------------------------------------------------------------------------------
+%
+% Copyright 2020-2022 Robert Bosch GmbH
+
+% Licensed under the Apache License, Version 2.0 (the "License");
+% you may not use this file except in compliance with the License.
+% You may obtain a copy of the License at
+
+% http://www.apache.org/licenses/LICENSE-2.0
+
+% Unless required by applicable law or agreed to in writing, software
+% distributed under the License is distributed on an "AS IS" BASIS,
+% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+% See the License for the specific language governing permissions and
+% limitations under the License.
+%
+% --------------------------------------------------------------------------------------------------------------
+
+\section{Keywords}
+
+The \rlog{Collection} module of the \pkg\ is the interface between the \textbf{PythonExtensionsCollection} and the
+\rfw\ and contains the keyword definitions that can be imported in the following way:
+
+\begin{robotcode}
+Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
+\end{robotcode}
+
+We recommend to use \rcode{WITH NAME} to shorten the long library name a little bit. That will make the robot code
+easier to read.
+
+\subsection{pretty\_print}
+
+The \rcode{pretty_print} keyword logs the content of parameters of any Python data type. Simple data types are logged directly.
+Composite data types are resolved before.
+
+\vspace{1ex}
+
+The output contains for every parameter:
+
+\begin{itemize}
+   \item the type
+   \item the total number of elements inside (e.g. the number of keys inside a dictionary)
+   \item the counter number of the current element
+   \item the value
+\end{itemize}
+
+The trace level for output is \rcode{INFO}. The output is also returned as list of strings.
+
+\newpage
+
+\textbf{Example}
+
+The following \rfw\ code defines - step by step - a parameter of composite data type (nested arrays and dictionaries)
+and prints the content of this with \rcode{pretty_print}:
+
+\begin{robotcode}
+set_test_variable    @{aItems1}    ${33}
+...                                XYZ
+
+set_test_variable    @{aItems}     A
+...                                ${22}
+...                                ${True}
+...                                ${aItems1}
+
+set_test_variable    &{dItems1}    A=${1}
+...                                B=${2}
+
+set_test_variable    &{dItems}     K1=value
+...                                K2=${aItems}
+...                                K3=${10}
+...                                K4=${dItems1}
+
+rf.extensions.pretty_print    ${dItems}
+\end{robotcode}
+
+\textbf{Result}
+
+\begin{robotlog}
+[DOTDICT] (4/1) > {K1} [STR]  :  'value'
+[DOTDICT] (4/2) > {K2} [LIST] (4/1) > [STR]  :  'A'
+[DOTDICT] (4/2) > {K2} [LIST] (4/2) > [INT]  :  22
+[DOTDICT] (4/2) > {K2} [LIST] (4/3) > [BOOL]  :  True
+[DOTDICT] (4/2) > {K2} [LIST] (4/4) > [LIST] (2/1) > [INT]  :  33
+[DOTDICT] (4/2) > {K2} [LIST] (4/4) > [LIST] (2/2) > [STR]  :  'XYZ'
+[DOTDICT] (4/3) > {K3} [INT]  :  10
+[DOTDICT] (4/4) > {K4} [DOTDICT] (2/1) > {A} [INT]  :  1
+[DOTDICT] (4/4) > {K4} [DOTDICT] (2/2) > {B} [INT]  :  2
+\end{robotlog}
+
+Every line of output has to be interpreted strictly from left to right.
+
+For example the meaning of the fifth line of output
+
+\begin{robotlog}
+[DOTDICT] (4/2) > {K2} [LIST] (4/4) > [LIST] (2/1) > [INT]  :  33
+\end{robotlog}
+
+is:
+
+\begin{itemize}
+   \item The type of input parameter \rlog{dItems} is \rlog{dotdict}
+   \item The dictionary contains 4 keys
+   \item The current line gives information about the second key of the dictionary
+   \item The name of the second key is \rlog{K2}
+   \item The value of the second key is of type \rlog{list}
+   \item The list contains 4 elements
+   \item The current line gives information about the fourth element of the list
+   \item The fourth element of the list is of type \rlog{list}
+   \item The list contains 2 elements
+   \item The current line gives information about the first element of the list
+   \item The first element of the list is of type \rlog{int} and has the value \rlog{33}
+\end{itemize}
+
+Types are encapsulated in square brackets, counter in round brackets and key names are encapsulated in curly brackets.
+
+\newpage
+
+\subsection{normalize\_path}
+
+The \rcode{normalize_path} keyword normalizes local paths, paths to local network resources and internet addresses.
+
+\vspace{1ex}
+
+\textbf{Background}
+
+It's not easy to handle paths - and especially the path separators - independent from the operating system.
+
+Under Linux it is obvious that single slashes are used as separator within paths. Whereas the Windows explorer
+uses single backslashes. In both operating systems web addresses contains single slashes as separator
+when displayed in web browsers.
+
+Using single backslashes within code - as content of string variables - is dangerous because the combination
+of a backslash and a letter can be interpreted as escape sequence - and this is maybe not the effect a user wants to have.
+
+To avoid unwanted escape sequences backslashes have to be masked (by the usage of two of them: \rcode{"\\\\"}).
+But also this could not be the best solution because there are also applications (like the Windows explorer) that are not able to handle
+masked backslashes. They expect to get single backslashes within a path.
+
+Preparing a path for best usage within code also includes collapsing redundant separators and up-level references.
+Python already provides functions to do this, but the outcome (path contains slashes or backslashes) depends on the
+operating system. And like already mentioned above also under Windows backslashes might not be the preferred choice.
+
+It also has to be considered that redundant separators at the beginning of an address of a local network resource
+(like \rcode{\\\\server.com}) and or inside an internet address (like \rcode{https:\\\\server.com}) must \textbf{not} be collapsed!
+Unfortunately the Python function \rcode{normpath} does not consider this context.
+
+To give the user full control about the format of a path, independent from the operating system and independent if it's
+a local path, a path to a local network resource or an internet address, the keyword \rcode{normalize_path} provides
+lot's of parameters to influence the result.
+
+\vspace{1ex}
+
+\textbf{Example 1}
+
+\vspace{1ex}
+
+Variable containing a path with:
+
+\begin{itemize}
+   \item different types of path separators
+   \item redundant path separators (\textit{but backslashes have to be masked in the definition of the variable, this is \textbf{not} an unwanted redundancy})
+   \item up-level references
+\end{itemize}
+
+\begin{robotcode}
+set_test_variable    ${sPath}    C:\\\\subfolder1///../subfolder2\\\\\\\\../subfolder3\\\\
+\end{robotcode}
+
+Printing the content of \rcode{sPath} shows how the path looks like when the masking of the backslashes is resolved:
+
+\begin{robotlog}
+C:\\subfolder1///../subfolder2\\\\../subfolder3\\
+\end{robotlog}
+
+Usage of the \rcode{normalize_path} keyword:
+
+\begin{robotcode}
+${sPath}    rf.extensions.normalize_path    ${sPath}
+\end{robotcode}
+
+Result (content of \rcode{sPath}):
+
+\begin{robotlog}
+C:/subfolder3
+\end{robotlog}
+
+In case we need the Windows version (with masked backslashes instead of slashes):
+
+\begin{robotcode}
+${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}
+\end{robotcode}
+
+Result (content of \rcode{sPath}):
+
+\begin{robotlog}
+C:\\subfolder3
+\end{robotlog}
+
+The masking of backslashes can be deactivated:
+
+\begin{robotcode}
+${sPath}    rf.extensions.normalize_path    ${sPath}    bWin=${True}    bMask=${False}
+\end{robotcode}
+
+Result (content of \rcode{sPath}):
+
+\begin{robotlog}
+C:\subfolder3
+\end{robotlog}
+
+\vspace{1ex}
+
+\textbf{Example 2}
+
+\vspace{1ex}
+
+Variable containing a path of a local network resource (path starts with two masked backslashes):
+
+\begin{robotcode}
+set_test_variable    ${sPath}    \\\\anyserver.com\\\\part1//part2\\\\part3/part4
+\end{robotcode}
+
+Result of normalization:
+
+\begin{robotlog}
+//anyserver.com/part1/part2/part3/part4
+\end{robotlog}
+
+\vspace{1ex}
+
+\textbf{Example 3}
+
+\vspace{1ex}
+
+Variable containing an internet address:
+
+\begin{robotcode}
+set_test_variable    ${sPath}    http:\\\\anyserver.com\\\\part1//part2\\\\part3/part4
+\end{robotcode}
+
+Result of normalization:
+
+\begin{robotlog}
+http://anyserver.com/part1/part2/part3/part4
+\end{robotlog}
+
