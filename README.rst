@@ -1,12 +1,12 @@
 .. Copyright 2020-2022 Robert Bosch GmbH
 
-   Licensed under the Apache License, Version 2.0 (the "License");
+.. Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+.. http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
+.. Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
@@ -15,29 +15,42 @@
 Package Description
 ===================
 
-The *Robotframework Extensions Collection* extends the functionality of the Robotframework by some keywords providing features,
-that are implemented in the *Python Extensions Collection*.
+The **RobotframeworkExtensions** extend the functionality of the Robot Framework by some useful keywords.
 
 How to install
 --------------
 
-Firstly clone the **robotframework-extensions-collection** repository to your machine.
+The **RobotframeworkExtensions** can be installed in two different ways.
 
-.. code::
+1. Installation via PyPi (recommended for users)
 
-   git clone https://github.com/test-fullautomation/robotframework-extensions-collection.git
+   .. code::
 
-Use the following command to install this package:
+      pip install RobotframeworkExtensions
 
-.. code::
+   `RobotframeworkExtensions in PyPi <https://pypi.org/project/RobotframeworkExtensions/>`_           **! (soon) !**
 
-   setup.py install
+2. Installation via GitHub (recommended for developers)
+
+   Clone the **robotframework-extensions-collection** repository to your machine.
+
+   .. code::
+
+      git clone https://github.com/test-fullautomation/robotframework-extensions-collection.git
+
+   `RobotframeworkExtensions in GitHub <https://github.com/test-fullautomation/robotframework-extensions-collection>`_
+
+   Use the following command to install the **RobotframeworkExtensions**:
+
+   .. code::
+
+      setup.py install
 
 
 Package Documentation
 ---------------------
 
-A detailed documentation of the Robotframework Extensions Collection package can be found here:
+A detailed documentation of the **RobotframeworkExtensions** can be found here:
 
 `RobotframeworkExtensions.pdf <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
 

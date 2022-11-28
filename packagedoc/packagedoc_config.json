@@ -5,7 +5,7 @@
 # With the help of a LaTeX compiler the tex files can be converted into a PDF file.
 # This json file contains the required settings.
 #
-# 23.08.2022
+# 21.11.2022
 #
 # **************************************************************************************************************
 # Format: extended json format with the possibility to comment out lines (by '#' at the beginning of the line).
@@ -21,8 +21,8 @@
 # Contains parameter to control the application behavior in general.
 
    "CONTROL" : {
-                # if 'INCLUDEPRIVATE' is false: private methods are skipped, otherwise they are included in documentation
-                "INCLUDEPRIVATE"      : false,
+                ## if 'INCLUDEPRIVATE' is false: private methods are skipped, otherwise they are included in documentation
+                ## 21.11.2022 feature temporarily not available # "INCLUDEPRIVATE"      : false,
                 # if 'INCLUDEUNDOCUMENTED' is true: also classes and methods without docstring are listed in the documentation;
                 # otherwise they are skipped
                 "INCLUDEUNDOCUMENTED" : true,
@@ -51,11 +51,12 @@
 # (see section "OUTPUT") and the relative paths to possibly imported pictures (see section "PICTURES") must be kept valid!
 
    "TOC" : {
-            "introduction"  : "./additional_docs/Introduction.rst",
+            "introduction"  : "./additional_docs/Introduction.tex",
+            "description"   : "./additional_docs/Description.tex",
             "INTERFACE"     : "../###PACKAGENAME###",
             "appendix"      : "./additional_docs/Appendix.rst",
             "history"       : "./additional_docs/History.tex",
-            "DOCUMENTPARTS" : ["introduction","INTERFACE","appendix","history"]
+            "DOCUMENTPARTS" : ["introduction","description","INTERFACE","appendix","history"]
            },
 
 # Section "PARAMS":
