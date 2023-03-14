@@ -16,10 +16,11 @@
 *** Settings ***
 
 Documentation    pretty_print test suite
-...    A full unittest of the underlying Python implementation of this keyword is implemented also in Python.
-...    This test suite only contains some basic tests to ensure that in general it is possible to use this
-...    keyword within a robot file.
-...    A certain configuration is not required.
+
+# A full unittest of the underlying Python implementation of this keyword is implemented also in Python.
+# This test suite only contains some basic tests to ensure that in general it is possible to use this
+# keyword within a robot file.
+# A certain configuration is not required.
 
 Resource    ./imports/testimport.resource
 
