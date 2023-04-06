@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 29.03.2023
+# 06.04.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -130,12 +130,14 @@ The output is also returned as list of strings.
        if sPrefix is None:
           for sLine in listOutLines:
              BuiltIn().log(sLine, "INFO")
+             BuiltIn().log_to_console(sLine)
           return listOutLines
        else:
           listOutLinesNew = []
           for sLine in listOutLines:
              sLine = f"{sPrefix} : {sLine}"
              BuiltIn().log(sLine, "INFO")
+             BuiltIn().log_to_console(sLine)
              listOutLinesNew.append(sLine)
           return listOutLinesNew
 
