@@ -115,6 +115,33 @@ Types are encapsulated in square brackets, counter in round brackets and key nam
 
 \newpage
 
+\textbf{Prefix strings}
+
+Prefix strings (\rcode{sPrefix}) can be used to give the lines of output a meaning, or they are used just to print also the name
+of the pretty printed variable (\rcode{oData}).
+
+\textbf{Example}
+
+\begin{robotcode}
+rf.extensions.pretty_print    ${dItems}    PrefixString
+\end{robotcode}
+
+\textbf{Result}
+
+\begin{robotlog}
+PrefixString : [DOTDICT] (4/1) > {K1} [STR]  :  'value'
+PrefixString : [DOTDICT] (4/2) > {K2} [LIST] (4/1) > [STR]  :  'A'
+PrefixString : [DOTDICT] (4/2) > {K2} [LIST] (4/2) > [INT]  :  22
+PrefixString : [DOTDICT] (4/2) > {K2} [LIST] (4/3) > [BOOL]  :  True
+PrefixString : [DOTDICT] (4/2) > {K2} [LIST] (4/4) > [LIST] (2/1) > [INT]  :  33
+PrefixString : [DOTDICT] (4/2) > {K2} [LIST] (4/4) > [LIST] (2/2) > [STR]  :  'XYZ'
+PrefixString : [DOTDICT] (4/3) > {K3} [INT]  :  10
+PrefixString : [DOTDICT] (4/4) > {K4} [DOTDICT] (2/1) > {A} [INT]  :  1
+PrefixString : [DOTDICT] (4/4) > {K4} [DOTDICT] (2/2) > {B} [INT]  :  2
+\end{robotlog}
+
+\newpage
+
 \subsection{normalize\_path}
 
 The \rcode{normalize_path} keyword normalizes local paths, paths to local network resources and internet addresses.

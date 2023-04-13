@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 21.11.2022
+# 06.04.2023
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -82,7 +82,7 @@ class Collection(object):
     #TM***
     
     @keyword
-    def pretty_print(self, oData=None):
+    def pretty_print(self, oData=None, sPrefix=None):
        """
 The ``pretty_print`` keyword logs the content of parameters of any Python data type (input: ``oData``).
 
@@ -107,6 +107,12 @@ The output is also returned as list of strings.
 
   Data to be pretty printed
 
+* ``sPrefix``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  If not ``None``, this prefix string is added to every output line.
+
 **Returns:**
 
 * ``listOutLines`` (*list*)
@@ -120,12 +126,22 @@ The output is also returned as list of strings.
 
        oTypePrint   = CTypePrint()
        listOutLines = oTypePrint.TypePrint(oData)
-       for sLine in listOutLines:
-          BuiltIn().log(sLine, "INFO")
 
-       return listOutLines
+       if sPrefix is None:
+          for sLine in listOutLines:
+             BuiltIn().log(sLine, "INFO")
+             BuiltIn().log_to_console(sLine)
+          return listOutLines
+       else:
+          listOutLinesNew = []
+          for sLine in listOutLines:
+             sLine = f"{sPrefix} : {sLine}"
+             BuiltIn().log(sLine, "INFO")
+             BuiltIn().log_to_console(sLine)
+             listOutLinesNew.append(sLine)
+          return listOutLinesNew
 
-    # eof pretty_print(self, oData=None):
+    # eof def pretty_print(self, oData=None, sPrefix=None):
 
     # --------------------------------------------------------------------------------------------------------------
     #TM***

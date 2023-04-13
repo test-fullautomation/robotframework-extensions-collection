@@ -60,14 +60,39 @@ PrettyPrintTest_1
 
 # **************************************************************************************************************
 
+PrettyPrintTest_2
+    [Documentation]    Test 2 of keyword 'pretty_print': list with prefix
+
+    set_test_variable    @{aItems}    TestString
+    ...                               ${25}
+    ...                               ${True}
+    ...                               ${None}
+
+    set_test_variable    @{aItemsExpected}    (PREFIX) : [LIST] (4/1) > [STR]\ \ :\ \ 'TestString'
+    ...                                       (PREFIX) : [LIST] (4/2) > [INT]\ \ :\ \ 25
+    ...                                       (PREFIX) : [LIST] (4/3) > [BOOL]\ \ :\ \ True
+    ...                                       (PREFIX) : [LIST] (4/4) > [NONE]\ \ :\ \ None
+
+    ${aOutput}    rf.extensions.pretty_print    ${aItems}    sPrefix=(PREFIX)
+
+    set_test_variable    ${nIndex}    ${0}
+    FOR    ${sOutput}    IN    @{aOutput}
+        log    ** Output\ \ \ : ${sOutput}    console=yes
+        log    ** Expected\ : ${aItemsExpected}[${nIndex}]    console=yes
+        should_be_equal    ${sOutput}    ${aItemsExpected}[${nIndex}]
+        ${nIndex}    Evaluate    ${nIndex} + 1
+    END
+
+# **************************************************************************************************************
+
 # !!! This test needs to be discussed because the type of dItems is not 'dict' or 'dotdict' - like expected,
 #     but '<class 'robot.utils.dotdict.DotDict'>'.
 #     Therefore CUtils from python-extensions-collection needs to be adapted.
 #     With this adaption the test works.
 #     Why does the Robotframework not support the same short name 'dotdict' like Python is doing?
 
-PrettyPrintTest_2
-    [Documentation]    Test 2 of keyword 'pretty_print' : dict
+PrettyPrintTest_3
+    [Documentation]    Test 3 of keyword 'pretty_print' : dict
 
     set_test_variable    &{dItems}    kVal_1=Val_1
     ...                               kVal_2=Val_2
