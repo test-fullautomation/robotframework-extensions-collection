@@ -32,19 +32,29 @@ The **RobotframeworkExtensions** can be installed in two different ways.
 
 2. Installation via GitHub (recommended for developers)
 
-   Clone the **robotframework-extensions-collection** repository to your machine.
+   a. Clone the **robotframework-extensions-collection** repository to your machine.
 
-   .. code::
+      .. code::
 
-      git clone https://github.com/test-fullautomation/robotframework-extensions-collection.git
+         git clone https://github.com/test-fullautomation/robotframework-extensions-collection.git
 
-   `RobotframeworkExtensions in GitHub <https://github.com/test-fullautomation/robotframework-extensions-collection>`_
+      `RobotframeworkExtensions in GitHub <https://github.com/test-fullautomation/robotframework-extensions-collection>`_
 
-   Use the following command to install the **RobotframeworkExtensions**:
+   b. Install dependencies
 
-   .. code::
+      **RobotframeworkExtensions** requires some additional Python libraries. Before you install the cloned repository sources
+      you have to install the dependencies manually. The names of all related packages you can find in the file ``requirements.txt``
+      in the repository root folder. Use pip to install them:
 
-      setup.py install
+      .. code::
+
+         pip install -r requirements.txt
+
+   c. Use the following command to install the **RobotframeworkExtensions**:
+
+      .. code::
+
+         setup.py install
 
 
 Package Documentation
