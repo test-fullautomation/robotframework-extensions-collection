@@ -14,12 +14,11 @@ The **RobotframeworkExtensions** can be installed in two different ways.
     ```
 
     [RobotframeworkExtensions in
-    PyPi](https://pypi.org/project/RobotframeworkExtensions/) **! (soon)
-    !**
+    PyPi](https://pypi.org/project/RobotframeworkExtensions/)
 
 2.  Installation via GitHub (recommended for developers)
 
-    a.  Clone the **robotframework-extensions-collection** repository to
+    -   Clone the **robotframework-extensions-collection** repository to
         your machine.
 
         ``` 
@@ -29,7 +28,7 @@ The **RobotframeworkExtensions** can be installed in two different ways.
         [RobotframeworkExtensions in
         GitHub](https://github.com/test-fullautomation/robotframework-extensions-collection)
 
-    b.  Install dependencies
+    -   Install dependencies
 
         **RobotframeworkExtensions** requires some additional Python
         libraries. Before you install the cloned repository sources you
@@ -41,7 +40,32 @@ The **RobotframeworkExtensions** can be installed in two different ways.
         pip install -r requirements.txt
         ```
 
-    c.  Use the following command to install the
+        Additionally install **LaTeX** (recommended: TeX Live). This is
+        used to render the documentation.
+
+    -   Configure dependencies
+
+        The installation of **RobotframeworkExtensions** includes to
+        generate the documentation in PDF format. This is done by an
+        application called **GenPackageDoc**, that is part of the
+        installation dependencies (see `requirements.txt`).
+
+        **GenPackageDoc** uses **LaTeX** to generate the documentation
+        in PDF format. Therefore **GenPackageDoc** needs to know where
+        to find **LaTeX**. This is defined in the **GenPackageDoc**
+        configuration file
+
+        ``` 
+        packagedoc\packagedoc_config.json
+        ```
+
+        Before you start the installation you have to introduce the
+        following environment variable, that is used in
+        `packagedoc_config.json`:
+
+        -   `GENDOC_LATEXPATH` : path to `pdflatex` executable
+
+    -   Use the following command to install the
         **RobotframeworkExtensions**:
 
         ``` 
