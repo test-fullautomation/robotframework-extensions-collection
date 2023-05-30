@@ -48,7 +48,7 @@ The **RobotframeworkExtensions** can be installed in two different ways.
 
      .. code::
 
-        pip install -r requirements.txt
+        pip install -r ./requirements.txt
 
      Additionally install **LaTeX** (recommended: TeX Live). This is used to render the documentation.
 
