@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2022 Robert Bosch GmbH
+#  Copyright 2020-2023 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ sThisModuleDate    = VERSION_DATE
 sThisModule        = sThisModuleName + " v. " + sThisModuleVersion + " / " + sThisModuleDate
 
 # --------------------------------------------------------------------------------------------------------------
-# 
+#
 @library
 class Collection(object):
     """Module main class
@@ -80,7 +80,7 @@ class Collection(object):
 
     # --------------------------------------------------------------------------------------------------------------
     #TM***
-    
+
     @keyword
     def pretty_print(self, oData=None, sPrefix=None):
        """
