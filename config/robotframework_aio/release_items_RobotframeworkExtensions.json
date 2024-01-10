@@ -45,15 +45,9 @@
 # ------------------------------------------
 
    "RELEASES"  : {
-                   "0.9." : [
-                              "RobotframeworkExtensions change 0.9 A",
-                              "RobotframeworkExtensions change 0.9 B",
-                              "RobotframeworkExtensions change 0.9 X"
-                            ],
-                   "0.10." : [
-                               "RobotframeworkExtensions change 0.10 A",
-                               "RobotframeworkExtensions change 0.10 B",
-                               "RobotframeworkExtensions change 0.10 X"
+                   "0.x.y" : [
+                               "0.x.y",
+                               "0.x.y"
                              ]
                  }
 }
