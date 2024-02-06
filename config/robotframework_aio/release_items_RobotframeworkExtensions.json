@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-# Copyright 2020-2023 Robert Bosch GmbH
+# Copyright 2020-2024 Robert Bosch GmbH
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@
 #
 # Basically this component is stand-alone, but can also be used as part of an automation framework called
 # RobotFramework AIO. More information about this framework you can find here:
-# 
+#
 # https://github.com/test-fullautomation/RobotFramework_AIO
-# 
+#
 # This JSON file contains component specific release information for the RobotFramework AIO.
 # In case you use the component stand-alone only, you can ignore this file.
-# 
+#
 # --------------------------------------------------------------------------------------------------------------
 #
 # Format: extended JSON format with the possibility to comment out lines (by '#' at the beginning of the line).
