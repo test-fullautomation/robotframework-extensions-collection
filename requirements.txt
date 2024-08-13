@@ -3,3 +3,5 @@ colorama
 pypandoc
 GenPackageDoc
 PythonExtensionsCollection
+setuptools>=70.0.0 # not directly required, pinned by Snyk to avoid a vulnerability
+wheel>=0.38.0 # not directly required, pinned by Snyk to avoid a vulnerability
