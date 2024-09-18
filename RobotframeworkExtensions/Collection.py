@@ -21,10 +21,7 @@
 # XC-HWP/ESW3-Queckenstedt
 #
 # --------------------------------------------------------------------------------------------------------------
-#
-# 06.04.2023
-#
-# --------------------------------------------------------------------------------------------------------------
+
 
 """
 The Collection module is the interface between the PythonExtensionsCollection and the Robot Framework.
@@ -39,6 +36,7 @@ This library containing the keyword definitions, can be imported in the followin
 
 # -- import standard Python modules
 import pickle, os, time, random
+from tabulate import tabulate
 
 # -- import Robotframework API
 from robot.api.deco import keyword, library # required when using @keyword, @library decorators
@@ -77,6 +75,94 @@ class Collection(object):
 
     def __del__(self):
         pass
+
+    # --------------------------------------------------------------------------------------------------------------
+    #TM***
+
+    @staticmethod
+    def get_rf_parameters(casesensitive    = True,
+                          skipblankstrings = True,
+                          comment          = None,
+                          startswith       = None,
+                          endswith         = None,
+                          startsnotwith    = None,
+                          endsnotwith      = None,
+                          contains         = None,
+                          containsnot      = None,
+                          inclregex        = None,
+                          exclregex        = None):
+        """
+This method generates a dump of all Robot Framework parameters in the curret scope (including the global parameters).
+
+The output can be filtered (to limit the dumped parameters to the desired ones).
+
+This method returns a dictionary containing all dumped parameters.
+
+In this module the method ``get_rf_parameters`` is used by the keyword ``get_parameters``. ``get_rf_parameters`` is made a separate static method
+to enable also other Python modules to use this method for their own needs.
+
+All input parameters are explained in detail here: `PythonExtensionsCollection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_
+Section 'String operations with CString', method 'StringFilter'.
+        """
+
+        variables = BuiltIn().get_variables()
+
+        list_uppercase     = [] # all letters uppercase
+        list_lowercase     = [] # all letters lowercase
+        list_capitalized   = [] # first letter uppercase
+        list_uncapitalized = [] # first letter lowercase
+        list_others        = []
+        dict_parameters    = {}
+        dict_returned      = {}
+        for key, value in variables.items():
+            # doing some sorting for better readibility (when dump, group parameters by the way they are typed)
+            parameter_name = key # full name including '${', '@{', '&{' and '}'
+            if key.startswith('${') or key.startswith('@{') or key.startswith('&{'):
+                key = key[2:]
+            if key.endswith('}'):
+                key = key[:-1]
+
+            if CString.StringFilter(key, casesensitive, skipblankstrings, comment, startswith, endswith, startsnotwith, endsnotwith, contains, containsnot , inclregex , exclregex):
+                dict_parameters[key] = {"name" : parameter_name, "value" : value} # keyword intarnal helper
+                dict_returned[key] = value # what will be returned from keyword
+                if len(key) > 3:
+                    if key.isupper():
+                        list_uppercase.append(key)
+                    elif key.islower():
+                        list_lowercase.append(key)
+                    elif key[0].isupper():
+                        list_capitalized.append(key)
+                    elif key[0].islower():
+                        list_uncapitalized.append(key)
+                    else:
+                        list_others.append(key)
+                else:
+                    list_others.append(key)
+
+        list_uppercase.sort()
+        list_lowercase.sort()
+        list_capitalized.sort()
+        list_uncapitalized.sort()
+        # currently no need to sort this list # list_others.sort()
+
+        tuple_valuelists = (list_uppercase, list_lowercase, list_capitalized, list_uncapitalized, list_others)
+        max_char = 120
+
+        output_table_rows = []
+        for valuelist in tuple_valuelists:
+            for param in valuelist:
+                str_value = f"{dict_parameters[param]['value']}"
+                if len(str_value) > max_char:
+                    str_value = str_value[:max_char] + " ..."
+                output_table_rows.append([f"{param}", "=", f"{str_value}"])
+
+        # -- convert to table and log
+        parameter_table = tabulate(output_table_rows, tablefmt="fancy_grid")
+        BuiltIn().log("\n" + parameter_table, level="INFO", html=False, console=False)
+
+        return dict_returned
+
+    # eof def get_rf_parameters
 
     # --------------------------------------------------------------------------------------------------------------
     #TM***
@@ -205,6 +291,42 @@ The ``normalize_path`` keyword normalizes local paths, paths to local network re
        """
        sPath = CString.NormalizePath(sPath, bWin, sReferencePathAbs, bConsiderBlanks, bExpandEnvVars, bMask)
        return sPath
+
+    # --------------------------------------------------------------------------------------------------------------
+
+    @keyword
+    def get_parameters(self, casesensitive = True,
+                             startswith    = None,
+                             endswith      = None,
+                             startsnotwith = None,
+                             endsnotwith   = None,
+                             contains      = None,
+                             containsnot   = None,
+                             inclregex     = None,
+                             exclregex     = None):
+        """
+This keyword generates a dump of all Robot Framework parameters in the curret scope (including the global parameters).
+
+The output can be filtered (to limit the dumped parameters to the desired ones).
+
+This keyword returns a dictionary containing all dumped parameters.
+
+All input parameters are explained in detail here: `PythonExtensionsCollection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_
+Section 'String operations with CString', method 'StringFilter'.
+        """
+
+        dict_returned = get_rf_parameters(casesensitive=casesensitive,
+                                          skipblankstrings=True, # not really required at keyword level
+                                          comment=None,          # not really required at keyword level
+                                          startswith=startswith,
+                                          endswith=endswith,
+                                          startsnotwith=startsnotwith,
+                                          endsnotwith=endsnotwith,
+                                          contains=contains,
+                                          containsnot=containsnot,
+                                          inclregex=inclregex,
+                                          exclregex=exclregex)
+        return dict_returned
 
     # --------------------------------------------------------------------------------------------------------------
 
