@@ -315,17 +315,17 @@ All input parameters are explained in detail here: `PythonExtensionsCollection.p
 Section 'String operations with CString', method 'StringFilter'.
         """
 
-        dict_returned = get_rf_parameters(casesensitive=casesensitive,
-                                          skipblankstrings=True, # not really required at keyword level
-                                          comment=None,          # not really required at keyword level
-                                          startswith=startswith,
-                                          endswith=endswith,
-                                          startsnotwith=startsnotwith,
-                                          endsnotwith=endsnotwith,
-                                          contains=contains,
-                                          containsnot=containsnot,
-                                          inclregex=inclregex,
-                                          exclregex=exclregex)
+        dict_returned = Collection.get_rf_parameters(casesensitive=casesensitive,
+                                                     skipblankstrings=True, # not really required at keyword level
+                                                     comment=None,          # not really required at keyword level
+                                                     startswith=startswith,
+                                                     endswith=endswith,
+                                                     startsnotwith=startsnotwith,
+                                                     endsnotwith=endsnotwith,
+                                                     contains=contains,
+                                                     containsnot=containsnot,
+                                                     inclregex=inclregex,
+                                                     exclregex=exclregex)
         return dict_returned
 
     # --------------------------------------------------------------------------------------------------------------
