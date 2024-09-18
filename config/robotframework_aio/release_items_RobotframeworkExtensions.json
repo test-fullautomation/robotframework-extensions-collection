@@ -45,9 +45,62 @@
 # ------------------------------------------
 
    "RELEASES"  : {
-                   "0.x.y" : [
-                               "0.x.y",
-                               "0.x.y"
-                             ]
+                  "0.12.1.;0.13.0." : [
+"
+* Added keyword ``get_parameters`` to get all **Robot Framework** parameters (this includes the global ones) within the current scope.
+
+  \"Current scope\" means: Calling ``get_parameters`` within the suite setup, will cause other results than calling ``get_parameters`` within a test.
+  Within the suite setup e.g., test specific parameters like the name of the test, are not available.
+
+  The keyword ``get_parameters`` writes all parameters to the log files and additionally returns a dictionary containing these parameters.
+
+  It is possible to apply several filters to limit the amount of returned parameters to the desired ones only.
+
+  **Example**:
+
+  Import the **RobotframeworkExtensions**:
+
+  | ``Library\u00a0\u00a0\u00a0\u00a0RobotframeworkExtensions.Collection\u00a0\u00a0\u00a0\u00a0WITH NAME\u00a0\u00a0\u00a0\u00a0rf.extensions``
+
+  Within a test call the keyword in this way to get all parameters with names starting with prefix ``TEST``:
+
+  | ``$\u007btest_parameters\u007d\u00a0\u00a0\u00a0\u00a0rf.extensions.get_parameters\u00a0\u00a0\u00a0\u00a0startswith=TEST``
+
+  Check of the return values:
+
+  | ``Log Dictionary\u00a0\u00a0\u00a0\u00a0${test_parameters}``
+
+  **Output:**
+
+  | ``+--------------------------------------------------------------------+``
+  | ``¦\u00a0TESTCOUNT\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0¦\u00a0=\u00a0¦\u00a01\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0¦``
+  | ``+--------------------+---+-------------------------------------------¦``
+  | ``¦\u00a0TEST_DOCUMENTATION\u00a0¦\u00a0=\u00a0¦\u00a0QuickTest\u00a0documentation\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0¦``
+  | ``+--------------------+---+-------------------------------------------¦``
+  | ``¦\u00a0TEST_NAME\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0¦\u00a0=\u00a0¦\u00a0QuickTest\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0¦``
+  | ``+--------------------+---+-------------------------------------------¦``
+  | ``¦\u00a0TEST_TAGS\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0¦\u00a0=\u00a0¦\u00a0['quicktest_suite_tag',\u00a0'quick_test_tag']\u00a0¦``
+  | ``+--------------------------------------------------------------------+``
+
+  and
+
+  | ``INFO - Dictionary size is 4 and it contains following items:``
+  | ``TESTCOUNT: 1``
+  | ``TEST_DOCUMENTATION: QuickTest documentation``
+  | ``TEST_NAME: QuickTest``
+  | ``TEST_TAGS: ['quicktest_suite_tag', 'quick_test_tag']``
+
+  **References:**
+
+  `RobotframeworkExtensions documentation <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
+
+  `Filter parameters <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_ (section: '*String operations with CString*', method: '``StringFilter``')
+
+  Notice: All ``StringFilter`` parameters available within ``get_parameters``, have to be written in a decapitalized format without type prefixes. Available are:
+  ``\"casesensitive\"``, ``\"startswith\"``, ``\"endswith\"``, ``\"startsnotwith\"``, ``\"endsnotwith\"``, ``\"contains\"``, ``\"containsnot\"``, ``\"inclregex\"``, ``\"exclregex\"``.
+
+  Without any filter set, all available parameters will be returned.
+"
+                                      ]
                  }
 }
