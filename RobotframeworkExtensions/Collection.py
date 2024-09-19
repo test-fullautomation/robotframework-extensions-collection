@@ -312,7 +312,9 @@ The output can be filtered (to limit the dumped parameters to the desired ones).
 This keyword returns a dictionary containing all dumped parameters.
 
 All input parameters are explained in detail here: `PythonExtensionsCollection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_
-Section 'String operations with CString', method 'StringFilter'.
+(section 'String operations with CString', method 'StringFilter'). Notice: In the context of this keyword, the filter parameter of the **PythonExtensionsCollection** have been renamed to a decapitalized format without type prefix.
+
+The actual names of all input parameters are: ``casesensitive``, ``startswith``, ``endswith``, ``startsnotwith``, ``endsnotwith``, ``contains``, ``containsnot``, ``inclregex``, ``exclregex``
         """
 
         dict_returned = Collection.get_rf_parameters(casesensitive=casesensitive,
@@ -327,6 +329,106 @@ Section 'String operations with CString', method 'StringFilter'.
                                                      inclregex=inclregex,
                                                      exclregex=exclregex)
         return dict_returned
+
+    # --------------------------------------------------------------------------------------------------------------
+
+    @keyword
+    def log_parameter(self, parameter_value=None, prefix=None, headline=None, level="INFO", console=True):
+        """
+The ``log_parameter`` keyword logs the value of a parameter in table format. The intention behind this is a better readibility of log files.
+
+* Simple data types like strings or integers are logged in a single table line.
+* Lists are logged with a separate line for every list element.
+* Dictionaries are logged with a separate line for every key.
+* Lists and dictionaries are resolved at top level only, not recursively. Every parameter value is logged in string format.
+* Every table line can be tagged with a prefix string (optional).
+* Every table can get a headline (optional).
+
+It is also possible to control the log level (default is ``"INFO"``) and if the table shall additionally be written to console or not (default is ``True``).
+
+**Arguments:**
+
+* ``parameter_value``
+
+  / *Condition*: required / *Type*: all supported /
+
+  The value to be logged
+
+* ``prefix``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  A prefix string added to the begginning of every line. This can be used to provide the name of the actual parameter whose value is to be logged (unfortunately this must be done manually because Python does not support this).
+
+* ``headline``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  An additional headline logged before the table.
+
+* ``level``
+
+  / *Condition*: optional / *Type*: str / *Default*: "INFO" /
+
+  The log level of output.
+
+* ``console``
+
+  / *Condition*: optional / *Type*: bool / *Default*: True /
+
+  Flag to control the console output.
+
+**Returns:**
+
+  (no return values)
+        """
+        table_data = []
+        max_char = 200
+        if isinstance(parameter_value, list) or isinstance(parameter_value, tuple):
+            for index, list_element in enumerate(parameter_value):
+                table_col_1 = f"[{index}]"
+                if prefix is not None:
+                    table_col_1 = f"{prefix}{table_col_1}"
+                table_col_2 = f"{parameter_value[index]}"
+                if len(table_col_2) > max_char:
+                    table_col_2 = table_col_2[:max_char] + " ..."
+                table_data.append((table_col_1, table_col_2))
+            parameter_table = tabulate(table_data, tablefmt="fancy_grid")
+            if headline is None:
+                BuiltIn().log("\n" + parameter_table, level=level, html=False, console=console)
+            else:
+                underline = len(headline)*"-"
+                BuiltIn().log(f"\n\n{underline}\n{headline}\n{underline}\n" + parameter_table + "\n", level=level, html=False, console=console)
+        elif isinstance(parameter_value, dict):
+            for key, value in parameter_value.items():
+                table_col_1 = f"[{key}]"
+                if prefix is not None:
+                    table_col_1 = f"{prefix}{table_col_1}"
+                table_col_2 = f"{parameter_value[key]}"
+                if len(table_col_2) > max_char:
+                    table_col_2 = table_col_2[:max_char] + " ..."
+                table_data.append((table_col_1, table_col_2))
+            parameter_table = tabulate(table_data, tablefmt="fancy_grid")
+            if headline is None:
+                BuiltIn().log("\n" + parameter_table, level=level, html=False, console=console)
+            else:
+                underline = len(headline)*"-"
+                BuiltIn().log(f"\n\n{underline}\n{headline}\n{underline}\n" + parameter_table + "\n", level=level, html=False, console=console)
+        else:
+            if prefix is not None:
+                table_col_1 = f"{prefix}"
+            else:
+                table_col_1 = "(parameter)"
+            table_col_2 = f"{parameter_value}"
+            if len(table_col_2) > max_char:
+                table_col_2 = table_col_2[:max_char] + " ..."
+            table_data.append((table_col_1, table_col_2))
+            parameter_table = tabulate(table_data, tablefmt="fancy_grid")
+            if headline is None:
+                BuiltIn().log("\n" + parameter_table, level=level, html=False, console=console)
+            else:
+                underline = len(headline)*"-"
+                BuiltIn().log(f"\n\n{underline}\n{headline}\n{underline}\n" + parameter_table + "\n", level=level, html=False, console=console)
 
     # --------------------------------------------------------------------------------------------------------------
 
