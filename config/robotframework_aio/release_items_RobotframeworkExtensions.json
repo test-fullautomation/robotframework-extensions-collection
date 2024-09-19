@@ -130,24 +130,24 @@
 
   Call the keyword in this way:
 
-  | ``rf.extensions.log_parameter\u00a0\u00a0\u00a0\u00a0${robot_file_param}\u00a0\u00a0\u00a0\u00a0parameter:\u00a0robot_file_param_3\u00a0\u00a0\u00a0\u00a0parameter\u00a0headline``
+  | ``rf.extensions.log_parameter\u00a0\u00a0\u00a0\u00a0${robot_file_param}\u00a0\u00a0\u00a0\u00a0parameter:\u00a0robot_file_param\u00a0\u00a0\u00a0\u00a0parameter\u00a0headline``
 
   **Output:**
 
   | ``------------------``
   | ``parameter headline``
   | ``------------------``
-  | ``╒══════════════════════════════════╤═════╕``
-  | ``│ parameter: robot_file_param_3[0] │ 123 │``
-  | ``├──────────────────────────────────┼─────┤``
-  | ``│ parameter: robot_file_param_3[1] │ 456 │``
-  | ``├──────────────────────────────────┼─────┤``
-  | ``│ parameter: robot_file_param_3[2] │ 789 │``
-  | ``╘══════════════════════════════════╧═════╛``
+  | ``╒════════════════════════════════╤═════╕``
+  | ``│ parameter: robot_file_param[0] │ 123 │``
+  | ``├────────────────────────────────┼─────┤``
+  | ``│ parameter: robot_file_param[1] │ 456 │``
+  | ``├────────────────────────────────┼─────┤``
+  | ``│ parameter: robot_file_param[2] │ 789 │``
+  | ``╘════════════════════════════════╧═════╛``
 
   As long as this keyword does not cause any naming conflicts, it is also possible to use a short version in **Robot Framework** style:
 
-  | ``Log Parameter\u00a0\u00a0\u00a0\u00a0${robot_file_param}\u00a0\u00a0\u00a0\u00a0parameter:\u00a0robot_file_param_3\u00a0\u00a0\u00a0\u00a0parameter\u00a0headline``
+  | ``Log Parameter\u00a0\u00a0\u00a0\u00a0${robot_file_param}\u00a0\u00a0\u00a0\u00a0parameter:\u00a0robot_file_param\u00a0\u00a0\u00a0\u00a0parameter\u00a0headline``
 
   **References:**
 
