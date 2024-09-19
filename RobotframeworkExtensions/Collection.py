@@ -90,7 +90,10 @@ class Collection(object):
                           contains         = None,
                           containsnot      = None,
                           inclregex        = None,
-                          exclregex        = None):
+                          exclregex        = None,
+                          headline         = None,
+                          level            = "INFO",
+                          console          = False):
         """
 This method generates a dump of all Robot Framework parameters in the curret scope (including the global parameters).
 
@@ -101,8 +104,30 @@ This method returns a dictionary containing all dumped parameters.
 In this module the method ``get_rf_parameters`` is used by the keyword ``get_parameters``. ``get_rf_parameters`` is made a separate static method
 to enable also other Python modules to use this method for their own needs.
 
-All input parameters are explained in detail here: `PythonExtensionsCollection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_
-Section 'String operations with CString', method 'StringFilter'.
+All input filter parameters are explained in detail here: `PythonExtensionsCollection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_
+(section 'String operations with CString', method 'StringFilter'). Notice: In the context of this method, the filter parameter of the **PythonExtensionsCollection** have been renamed to a decapitalized format without type prefix.
+
+The actual names of all input filter parameters are: ``casesensitive``, ``startswith``, ``endswith``, ``startsnotwith``, ``endsnotwith``, ``contains``, ``containsnot``, ``inclregex``, ``exclregex``
+
+Further input parameters are:
+
+* ``headline``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  An additional headline logged before the parameter dump.
+
+* ``level``
+
+  / *Condition*: optional / *Type*: str / *Default*: "INFO" /
+
+  The log level of output.
+
+* ``console``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  Flag to control the console output.
         """
 
         variables = BuiltIn().get_variables()
@@ -158,8 +183,11 @@ Section 'String operations with CString', method 'StringFilter'.
 
         # -- convert to table and log
         parameter_table = tabulate(output_table_rows, tablefmt="fancy_grid")
-        BuiltIn().log("\n" + parameter_table, level="INFO", html=False, console=False)
-
+        if headline is None:
+            BuiltIn().log("\n" + parameter_table, level=level, html=False, console=console)
+        else:
+            underline = len(headline)*"-"
+            BuiltIn().log(f"\n\n{underline}\n{headline}\n{underline}\n" + parameter_table + "\n", level=level, html=False, console=console)
         return dict_returned
 
     # eof def get_rf_parameters
@@ -303,7 +331,10 @@ The ``normalize_path`` keyword normalizes local paths, paths to local network re
                              contains      = None,
                              containsnot   = None,
                              inclregex     = None,
-                             exclregex     = None):
+                             exclregex     = None,
+                             headline      = None,
+                             level         = "INFO",
+                             console       = False):
         """
 This keyword generates a dump of all Robot Framework parameters in the curret scope (including the global parameters).
 
@@ -311,23 +342,46 @@ The output can be filtered (to limit the dumped parameters to the desired ones).
 
 This keyword returns a dictionary containing all dumped parameters.
 
-All input parameters are explained in detail here: `PythonExtensionsCollection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_
+All input filter parameters are explained in detail here: `PythonExtensionsCollection.pdf <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_
 (section 'String operations with CString', method 'StringFilter'). Notice: In the context of this keyword, the filter parameter of the **PythonExtensionsCollection** have been renamed to a decapitalized format without type prefix.
 
-The actual names of all input parameters are: ``casesensitive``, ``startswith``, ``endswith``, ``startsnotwith``, ``endsnotwith``, ``contains``, ``containsnot``, ``inclregex``, ``exclregex``
+The actual names of all input filter parameters are: ``casesensitive``, ``startswith``, ``endswith``, ``startsnotwith``, ``endsnotwith``, ``contains``, ``containsnot``, ``inclregex``, ``exclregex``
+
+Further input parameters are:
+
+* ``headline``
+
+  / *Condition*: optional / *Type*: str / *Default*: None /
+
+  An additional headline logged before the parameter dump.
+
+* ``level``
+
+  / *Condition*: optional / *Type*: str / *Default*: "INFO" /
+
+  The log level of output.
+
+* ``console``
+
+  / *Condition*: optional / *Type*: bool / *Default*: False /
+
+  Flag to control the console output.
         """
 
-        dict_returned = Collection.get_rf_parameters(casesensitive=casesensitive,
-                                                     skipblankstrings=True, # not really required at keyword level
-                                                     comment=None,          # not really required at keyword level
-                                                     startswith=startswith,
-                                                     endswith=endswith,
-                                                     startsnotwith=startsnotwith,
-                                                     endsnotwith=endsnotwith,
-                                                     contains=contains,
-                                                     containsnot=containsnot,
-                                                     inclregex=inclregex,
-                                                     exclregex=exclregex)
+        dict_returned = Collection.get_rf_parameters(casesensitive    = casesensitive,
+                                                     skipblankstrings = True,   # not really required at keyword level
+                                                     comment          = None,   # not really required at keyword level
+                                                     startswith       = startswith,
+                                                     endswith         = endswith,
+                                                     startsnotwith    = startsnotwith,
+                                                     endsnotwith      = endsnotwith,
+                                                     contains         = contains,
+                                                     containsnot      = containsnot,
+                                                     inclregex        = inclregex,
+                                                     exclregex        = exclregex,
+                                                     headline         = headline,
+                                                     level            = level,
+                                                     console          = console)
         return dict_returned
 
     # --------------------------------------------------------------------------------------------------------------
