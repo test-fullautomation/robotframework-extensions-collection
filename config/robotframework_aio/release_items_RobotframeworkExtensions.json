@@ -91,6 +91,10 @@
   | ``TEST_NAME: QuickTest``
   | ``TEST_TAGS: ['quicktest_suite_tag', 'quick_test_tag']``
 
+  As long as this keyword does not cause any naming conflicts with keywords from other imported libraries, it is also possible to use a short version in **Robot Framework** style:
+
+  | ``$\u007btest_parameters\u007d\u00a0\u00a0\u00a0\u00a0Get Parameters\u00a0\u00a0\u00a0\u00a0startswith=TEST``
+
   **References:**
 
   `RobotframeworkExtensions documentation <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
@@ -146,13 +150,63 @@
   | ``│ parameter: robot_file_param[2] │ 789 │``
   | ``╘════════════════════════════════╧═════╛``
 
-  As long as this keyword does not cause any naming conflicts, it is also possible to use a short version in **Robot Framework** style:
+  As long as this keyword does not cause any naming conflicts with keywords from other imported libraries, it is also possible to use a short version in **Robot Framework** style:
 
   | ``Log Parameter\u00a0\u00a0\u00a0\u00a0${robot_file_param}\u00a0\u00a0\u00a0\u00a0parameter:\u00a0robot_file_param\u00a0\u00a0\u00a0\u00a0parameter\u00a0headline``
 
   **References:**
 
   `RobotframeworkExtensions documentation <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
+
+-----
+
+* Added keyword ``log_metadata`` to log the suite metadata in table format.
+
+  **Example**:
+
+  Import the **RobotframeworkExtensions**:
+
+  | ``Library\u00a0\u00a0\u00a0\u00a0RobotframeworkExtensions.Collection\u00a0\u00a0\u00a0\u00a0WITH NAME\u00a0\u00a0\u00a0\u00a0rf.extensions``
+
+  Have some metadata available, e.g.:
+
+  | ``*** Settings ***``
+  | 
+  | ``Metadata\u00a0\u00a0\u00a0\u00a0TEST_FILE_METADATA_1\u00a0\u00a0\u00a0\u00a0test file metadata 1 value``
+  | ``Metadata\u00a0\u00a0\u00a0\u00a0TEST_FILE_METADATA_2\u00a0\u00a0\u00a0\u00a0test file metadata 2 value``
+  | ``Metadata\u00a0\u00a0\u00a0\u00a0TEST_FILE_METADATA_3\u00a0\u00a0\u00a0\u00a0test file metadata 3 value``
+  | ``Metadata\u00a0\u00a0\u00a0\u00a0TEST_FILE_METADATA_4\u00a0\u00a0\u00a0\u00a0test file metadata 4 value``
+
+  Call the keyword in this way:
+
+  | ``rf.extensions.log_metadata``
+
+  **Output:**
+
+  | ``---------------------``
+  | ``test suite meta data:``
+  | ``---------------------``
+  | ``╒═════════════════════════════════════════╤════════════════════════════╕``
+  | ``│ ${SUITE_METADATA}[TEST_FILE_METADATA_1] │ test file metadata 1 value │``
+  | ``├─────────────────────────────────────────┼────────────────────────────┤``
+  | ``│ ${SUITE_METADATA}[TEST_FILE_METADATA_2] │ test file metadata 2 value │``
+  | ``├─────────────────────────────────────────┼────────────────────────────┤``
+  | ``│ ${SUITE_METADATA}[TEST_FILE_METADATA_3] │ test file metadata 3 value │``
+  | ``├─────────────────────────────────────────┼────────────────────────────┤``
+  | ``│ ${SUITE_METADATA}[TEST_FILE_METADATA_4] │ test file metadata 4 value │``
+  | ``╘═════════════════════════════════════════╧════════════════════════════╛``
+
+  As long as this keyword does not cause any naming conflicts with keywords from other imported libraries, it is also possible to use a short version in **Robot Framework** style:
+
+  | ``Log Metadata``
+
+  **References:**
+
+  `RobotframeworkExtensions documentation <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
+
+
+
+
 "
                                       ]
                  }
