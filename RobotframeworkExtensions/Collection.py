@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2024 Robert Bosch GmbH
+#  Copyright 2020-2025 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 06.04.2023
+# 16.10.2025
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -53,10 +53,8 @@ from RobotframeworkExtensions.version import VERSION_DATE
 
 # --------------------------------------------------------------------------------------------------------------
 
-sThisModuleName    = "Collection.py"
-sThisModuleVersion = VERSION
-sThisModuleDate    = VERSION_DATE
-sThisModule        = sThisModuleName + " v. " + sThisModuleVersion + " / " + sThisModuleDate
+THISMODULENAME = os.path.basename(__file__)
+THISMODULE     = f"{THISMODULENAME} v. {VERSION} / {VERSION_DATE}"
 
 # --------------------------------------------------------------------------------------------------------------
 #
@@ -65,14 +63,15 @@ class Collection(object):
     """Module main class
     """
 
-    ROBOT_AUTO_KEYWORDS   = False # only decorated methods are keywords
-    ROBOT_LIBRARY_VERSION = sThisModuleVersion
-    ROBOT_LIBRARY_SCOPE   = 'GLOBAL'
+    ROBOT_LIBRARY_DOC_FORMAT = 'reST'
+    ROBOT_AUTO_KEYWORDS      = False # only decorated methods are keywords
+    ROBOT_LIBRARY_VERSION    = VERSION
+    ROBOT_LIBRARY_SCOPE      = 'GLOBAL'
 
     # --------------------------------------------------------------------------------------------------------------
     #TM***
 
-    def __init__(self, sThisModule=sThisModule):
+    def __init__(self, sThisModule=THISMODULE):
         self.sThisModule = sThisModule # in case of debugging
 
     def __del__(self):
