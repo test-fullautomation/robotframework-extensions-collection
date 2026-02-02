@@ -33,7 +33,7 @@ This library containing the keyword definitions, can be imported in the followin
 
 .. code::
 
-   Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
+   Library    RobotframeworkExtensions.Collection    AS    rf.extensions
 
 """
 

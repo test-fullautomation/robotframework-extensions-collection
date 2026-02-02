@@ -5,6 +5,6 @@ Documentation     test resource
 Library           Collections
 Library           BuiltIn
 
-Library    RobotFramework_TestsuitesManagement    WITH NAME    testsuites
+Library    RobotFramework_TestsuitesManagement    AS    testsuites
 
-Library    RobotframeworkExtensions.Collection    WITH NAME    rf.extensions
+Library    RobotframeworkExtensions.Collection    AS    rf.extensions
