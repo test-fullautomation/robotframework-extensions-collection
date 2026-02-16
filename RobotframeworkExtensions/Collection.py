@@ -497,7 +497,7 @@ It is also possible to control the log level (default is ``"INFO"``) and if the 
     @keyword
     def log_parameter(self, parameter_value=None, prefix=None, headline=None, level="INFO", console=True):
         """
-The ``log_parameter`` keyword logs the value of a parameter in table format. The intention behind this is a better readibility of log files.
+The ``log_parameter`` keyword logs the value of a parameter in table format. The intention behind this is a better readability of log files.
 
 * Simple data types like strings or integers are logged in a single table line.
 * Lists are logged with a separate line for every list element.
