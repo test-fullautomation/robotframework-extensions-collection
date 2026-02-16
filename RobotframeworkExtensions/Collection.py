@@ -555,7 +555,7 @@ The implementation is based on the corresponding static method ``log_rf_paramete
     @staticmethod
     def log_rf_metadata(level="INFO", console=True):
         """
-The static method ``log_rf_metadata`` logs the value of Robot Framework metadata in table format. The intention behind this is a better readibility of log files.
+The static method ``log_rf_metadata`` logs the value of Robot Framework metadata in table format. The intention behind this is a better readability of log files.
 
 **Arguments:**
 
@@ -588,7 +588,7 @@ The static method ``log_rf_metadata`` logs the value of Robot Framework metadata
     @keyword
     def log_metadata(self, level="INFO", console=True):
         """
-The ``log_metadata`` keyword logs the value of a parameter in table format. The intention behind this is a better readibility of log files.
+The ``log_metadata`` keyword logs the value of a metadata parameter in table format. The intention behind this is a better readability of log files.
 
 **Arguments:**
 
