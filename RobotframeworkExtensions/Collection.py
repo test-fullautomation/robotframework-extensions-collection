@@ -340,7 +340,7 @@ Further input parameters are:
                              level         = "INFO",
                              console       = False):
         """
-This keyword generates a dump of all Robot Framework parameters in the curret scope (including the global parameters).
+This keyword generates a dump of all Robot Framework parameters in the current scope (including the global parameters).
 
 The output can be filtered (to limit the dumped parameters to the desired ones).
 
