@@ -108,7 +108,7 @@
 
 -----
 
-* Added keyword ``log_parameter`` to log the value of a parameter in table format. The intention behind this is a better readibility of log files.
+* Added keyword ``log_parameter`` to log the value of a parameter in table format. The intention behind this is a better readability of log files.
 
   * Simple data types like strings or integers are logged in a single table line.
   * Lists are logged with a separate line for every list element.
