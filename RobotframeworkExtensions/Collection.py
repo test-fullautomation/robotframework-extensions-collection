@@ -396,7 +396,7 @@ The implementation is based on the corresponding static method ``get_rf_paramete
     @staticmethod
     def log_rf_parameter(parameter_value=None, prefix=None, headline=None, level="INFO", console=True):
         """
-The static method ``log_rf_parameter`` logs the value of a parameter in table format. The intention behind this is a better readibility of log files.
+The static method ``log_rf_parameter`` logs the value of a parameter in table format. The intention behind this is a better readability of log files.
 
 * Simple data types like strings or integers are logged in a single table line.
 * Lists are logged with a separate line for every list element.
