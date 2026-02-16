@@ -226,7 +226,7 @@ The ``normalize_path`` keyword normalizes local paths, paths to local network re
                           level            = "INFO",
                           console          = False):
         """
-the static method ``get_rf_parameters`` generates a dump of all Robot Framework parameters in the curret scope (including the global parameters).
+the static method ``get_rf_parameters`` generates a dump of all Robot Framework parameters in the current scope (including the global parameters).
 
 The output can be filtered (to limit the dumped parameters to the desired ones).
 
