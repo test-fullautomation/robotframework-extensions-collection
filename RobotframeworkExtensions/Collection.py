@@ -279,7 +279,7 @@ Further input parameters are:
                 key = key[:-1]
 
             if CString.StringFilter(key, casesensitive, skipblankstrings, comment, startswith, endswith, startsnotwith, endsnotwith, contains, containsnot , inclregex , exclregex):
-                dict_parameters[key] = {"name" : parameter_name, "value" : value} # keyword intarnal helper
+                dict_parameters[key] = {"name" : parameter_name, "value" : value} # keyword internal helper
                 dict_returned[key] = value # what will be returned from keyword
                 if len(key) > 3:
                     if key.isupper():
