@@ -271,7 +271,7 @@ Further input parameters are:
         dict_parameters    = {}
         dict_returned      = {}
         for key, value in variables.items():
-            # doing some sorting for better readibility (when dump, group parameters by the way they are typed)
+            # doing some sorting for better readability (when dump, group parameters by the way they are typed)
             parameter_name = key # full name including '${', '@{', '&{' and '}'
             if key.startswith('${') or key.startswith('@{') or key.startswith('&{'):
                 key = key[2:]
