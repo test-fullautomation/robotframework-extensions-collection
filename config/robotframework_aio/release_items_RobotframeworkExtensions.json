@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-# Copyright 2020-2024 Robert Bosch GmbH
+# Copyright 2020-2026 Robert Bosch GmbH
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -45,9 +45,169 @@
 # ------------------------------------------
 
    "RELEASES"  : {
-                   "0.x.y" : [
-                               "0.x.y",
-                               "0.x.y"
-                             ]
+                  "1.0.0.;1.1.0." : [
+"
+* Added keyword ``get_parameters`` to get all **Robot Framework** parameters (this includes the global ones) within the current scope.
+
+  \"Current scope\" means: Calling ``get_parameters`` within the suite setup, will cause other results than calling ``get_parameters`` within a test.
+  Within the suite setup e.g., test specific parameters like the name of the test, are not available.
+
+  The keyword ``get_parameters`` writes all parameters to the log files and additionally returns a dictionary containing these parameters.
+
+  It is possible to apply several filters to limit the amount of returned parameters to the desired ones only.
+
+  **Example**:
+
+  Import the **RobotframeworkExtensions**:
+
+  | ``Library\u00a0\u00a0\u00a0\u00a0RobotframeworkExtensions.Collection\u00a0\u00a0\u00a0\u00a0AS\u00a0\u00a0\u00a0\u00a0rf.extensions``
+
+  Within a test call the keyword in this way to get all parameters with names starting with prefix ``TEST``:
+
+  | ``$\u007btest_parameters\u007d\u00a0\u00a0\u00a0\u00a0rf.extensions.get_parameters\u00a0\u00a0\u00a0\u00a0startswith=TEST``
+
+  Check of the return values:
+
+  | ``log_dictionary\u00a0\u00a0\u00a0\u00a0${test_parameters}``
+
+  **Output:**
+
+  | ``╒════════════════════╤═══╤═══════════════════════════════════════════╕``
+  | ``│\u00a0TESTCOUNT\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0│\u00a0=\u00a0│\u00a01\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0│``
+  | ``├────────────────────┼───┼───────────────────────────────────────────┤``
+  | ``│\u00a0TEST_DOCUMENTATION\u00a0│\u00a0=\u00a0│\u00a0QuickTest\u00a0documentation\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0│``
+  | ``├────────────────────┼───┼───────────────────────────────────────────┤``
+  | ``│\u00a0TEST_NAME\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0│\u00a0=\u00a0│\u00a0QuickTest\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0│``
+  | ``├────────────────────┼───┼───────────────────────────────────────────┤``
+  | ``│\u00a0TEST_TAGS\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0│\u00a0=\u00a0│\u00a0['quicktest_suite_tag',\u00a0'quick_test_tag']\u00a0│``
+  | ``╘════════════════════╧═══╧═══════════════════════════════════════════╛``
+
+
+  and
+
+  | ``INFO - Dictionary size is 4 and it contains following items:``
+  | ``TESTCOUNT: 1``
+  | ``TEST_DOCUMENTATION: QuickTest documentation``
+  | ``TEST_NAME: QuickTest``
+  | ``TEST_TAGS: ['quicktest_suite_tag', 'quick_test_tag']``
+
+  As long as this keyword does not cause any naming conflicts with keywords from other imported libraries, it is also possible to use a short version in **Robot Framework** style:
+
+  | ``$\u007btest_parameters\u007d\u00a0\u00a0\u00a0\u00a0Get Parameters\u00a0\u00a0\u00a0\u00a0startswith=TEST``
+
+  **References:**
+
+  `RobotframeworkExtensions documentation <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
+
+  `Filter parameters <https://github.com/test-fullautomation/python-extensions-collection/blob/develop/PythonExtensionsCollection/PythonExtensionsCollection.pdf>`_ (section: '*String operations with CString*', method: '``StringFilter``')
+
+  Notice: All ``StringFilter`` parameters available within ``get_parameters``, have to be written in a decapitalized format without type prefixes. Available are:
+  ``\"casesensitive\"``, ``\"startswith\"``, ``\"endswith\"``, ``\"startsnotwith\"``, ``\"endsnotwith\"``, ``\"contains\"``, ``\"containsnot\"``, ``\"inclregex\"``, ``\"exclregex\"``.
+
+  Without any filter set, all available parameters will be returned.
+
+-----
+
+* Added keyword ``log_parameter`` to log the value of a parameter in table format. The intention behind this is a better readibility of log files.
+
+  * Simple data types like strings or integers are logged in a single table line.
+  * Lists are logged with a separate line for every list element.
+  * Dictionaries are logged with a separate line for every key.
+  * Lists and dictionaries are resolved at top level only, not recursively. Every parameter value is logged in string format.
+  * Every table line can be tagged with a prefix string (optional).
+  * Every table can get a headline (optional).
+
+  It is also possible to control the log level (default is ``\"INFO\"``) and if the table shall additionally be written to console or not (default is ``True``).
+
+  **Example**:
+
+  Import the **RobotframeworkExtensions**:
+
+  | ``Library\u00a0\u00a0\u00a0\u00a0RobotframeworkExtensions.Collection\u00a0\u00a0\u00a0\u00a0AS\u00a0\u00a0\u00a0\u00a0rf.extensions``
+
+  Have a parameter available, e.g.:
+
+  | ``*** Variables ***``
+  | 
+  | ``@{robot_file_param}\u00a0\u00a0\u00a0\u00a0123``
+  | ``...\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0456``
+  | ``...\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0789``
+
+  Call the keyword in this way:
+
+  | ``rf.extensions.log_parameter\u00a0\u00a0\u00a0\u00a0${robot_file_param}\u00a0\u00a0\u00a0\u00a0parameter:\u00a0robot_file_param\u00a0\u00a0\u00a0\u00a0parameter\u00a0headline``
+
+  **Output:**
+
+  | ``------------------``
+  | ``parameter headline``
+  | ``------------------``
+  | ``╒════════════════════════════════╤═════╕``
+  | ``│ parameter: robot_file_param[0] │ 123 │``
+  | ``├────────────────────────────────┼─────┤``
+  | ``│ parameter: robot_file_param[1] │ 456 │``
+  | ``├────────────────────────────────┼─────┤``
+  | ``│ parameter: robot_file_param[2] │ 789 │``
+  | ``╘════════════════════════════════╧═════╛``
+
+  As long as this keyword does not cause any naming conflicts with keywords from other imported libraries, it is also possible to use a short version in **Robot Framework** style:
+
+  | ``Log Parameter\u00a0\u00a0\u00a0\u00a0${robot_file_param}\u00a0\u00a0\u00a0\u00a0parameter:\u00a0robot_file_param\u00a0\u00a0\u00a0\u00a0parameter\u00a0headline``
+
+  **References:**
+
+  `RobotframeworkExtensions documentation <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
+
+-----
+
+* Added keyword ``log_metadata`` to log the suite metadata in table format.
+
+  **Example**:
+
+  Import the **RobotframeworkExtensions**:
+
+  | ``Library\u00a0\u00a0\u00a0\u00a0RobotframeworkExtensions.Collection\u00a0\u00a0\u00a0\u00a0AS\u00a0\u00a0\u00a0\u00a0rf.extensions``
+
+  Have some metadata available, e.g.:
+
+  | ``*** Settings ***``
+  | 
+  | ``Metadata\u00a0\u00a0\u00a0\u00a0TEST_FILE_METADATA_1\u00a0\u00a0\u00a0\u00a0test file metadata 1 value``
+  | ``Metadata\u00a0\u00a0\u00a0\u00a0TEST_FILE_METADATA_2\u00a0\u00a0\u00a0\u00a0test file metadata 2 value``
+  | ``Metadata\u00a0\u00a0\u00a0\u00a0TEST_FILE_METADATA_3\u00a0\u00a0\u00a0\u00a0test file metadata 3 value``
+  | ``Metadata\u00a0\u00a0\u00a0\u00a0TEST_FILE_METADATA_4\u00a0\u00a0\u00a0\u00a0test file metadata 4 value``
+
+  Call the keyword in this way:
+
+  | ``rf.extensions.log_metadata``
+
+  **Output:**
+
+  | ``---------------------``
+  | ``test suite meta data:``
+  | ``---------------------``
+  | ``╒═════════════════════════════════════════╤════════════════════════════╕``
+  | ``│ ${SUITE_METADATA}[TEST_FILE_METADATA_1] │ test file metadata 1 value │``
+  | ``├─────────────────────────────────────────┼────────────────────────────┤``
+  | ``│ ${SUITE_METADATA}[TEST_FILE_METADATA_2] │ test file metadata 2 value │``
+  | ``├─────────────────────────────────────────┼────────────────────────────┤``
+  | ``│ ${SUITE_METADATA}[TEST_FILE_METADATA_3] │ test file metadata 3 value │``
+  | ``├─────────────────────────────────────────┼────────────────────────────┤``
+  | ``│ ${SUITE_METADATA}[TEST_FILE_METADATA_4] │ test file metadata 4 value │``
+  | ``╘═════════════════════════════════════════╧════════════════════════════╛``
+
+  As long as this keyword does not cause any naming conflicts with keywords from other imported libraries, it is also possible to use a short version in **Robot Framework** style:
+
+  | ``Log Metadata``
+
+  **References:**
+
+  `RobotframeworkExtensions documentation <https://github.com/test-fullautomation/robotframework-extensions-collection/blob/develop/RobotframeworkExtensions/RobotframeworkExtensions.pdf>`_
+
+
+
+
+"
+                                      ]
                  }
 }
