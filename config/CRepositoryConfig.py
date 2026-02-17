@@ -90,10 +90,16 @@ class CRepositoryConfig():
         toml_file = f"{self.__sReferencePath}/pyproject.toml"
         self.__dictRepositoryConfig['TOMLCONFIGURATIONFILE'] = toml_file
         try:
+            if not os.path.exists(toml_file):
+                raise FileNotFoundError(f"TOML file '{toml_file}' not found")
             with open(toml_file, 'rb') as f:
                 toml_data = tomllib.load(f)
+        except FileNotFoundError as ex:
+            raise Exception(f"TOML file '{toml_file}' not found") from ex
         except tomllib.TOMLDecodeError as ex:
-            raise Exception(f"TOML file '{toml_file}': {ex}")
+            raise Exception(f"TOML file '{toml_file}' invalid: {ex}") from ex
+        except Exception as ex:
+            raise Exception(f"Failed to read TOML file '{toml_file}': {ex}") from ex
         authors = toml_data.get("project", {}).get("authors") or []
         author = authors[0] if isinstance(authors, list) and authors else {}
         self.__dictRepositoryConfig['AUTHOR'] = author.get('name', "(not found)") if isinstance(author, dict) else "(not found)"
