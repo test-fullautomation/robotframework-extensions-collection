@@ -26,7 +26,7 @@ The **RobotframeworkExtensions** can be installed in two different ways.
 
    .. code::
 
-      pip install RobotframeworkExtensions
+      pip install robotframework-extensions-collection
 
    `RobotframeworkExtensions in PyPi <https://pypi.org/project/robotframework-extensions-collection/>`_
 
