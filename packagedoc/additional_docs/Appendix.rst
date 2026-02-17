@@ -27,11 +27,6 @@
    Package URL         `###REPOSITORYNAME### <###URL###>`_
    Author              ###AUTHOR###
    Email               ###AUTHOREMAIL###
-   Language            ###PROGRAMMINGLANGUAGE###
-   License             ###LICENCE###
-   OS                  ###OPERATINGSYSTEM###
-   Python required     ###PYTHONREQUIRES###
-   Development status  ###DEVELOPMENTSTATUS###
-   Intended audience   ###INTENDEDAUDIENCE###
-   Topic               ###TOPIC###
+   License             ###LICENSE###
+   Python required     ###PYTHON_REQUIRED###
    ==================  =========================
