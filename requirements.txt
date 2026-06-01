@@ -1,5 +1,0 @@
-robotframework
-colorama
-pypandoc
-GenPackageDoc
-PythonExtensionsCollection

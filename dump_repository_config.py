@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2024 Robert Bosch GmbH
+#  Copyright 2020-2026 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -33,9 +33,6 @@
 import os, sys
 
 import colorama as col
-
-# prefer the repository local version of all additional libraries (instead of the installed version under site-packages)
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "./additions")))
 
 from config.CRepositoryConfig import CRepositoryConfig
 
