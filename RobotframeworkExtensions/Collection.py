@@ -59,53 +59,6 @@ THISMODULENAME = os.path.basename(__file__)
 THISMODULE     = f"{THISMODULENAME} v. {VERSION} / {VERSION_DATE}"
 
 # --------------------------------------------------------------------------------------------------------------
-
-def is_dotdict_like(oData):
-   """
-Duck-typed detection of a "dot dictionary" (a dict-like object that, in
-addition to the usual bracket notation, also supports attribute access on its
-own keys, e.g. ``oData.key`` instead of only ``oData["key"]``).
-
-Several, mutually unrelated "dotdict" implementations exist in the wild
-(``dotdict.dotdict``, ``pydotdict.pydotdict.DotDict``,
-``robot.utils.dotdict.DotDict``, ...), with no common base class between
-them. Rather than importing and special-casing each one of them by name/type
-(which breaks for any further, unknown implementation), this function
-recognizes the behavior itself: Mapping protocol + attribute access on keys.
-
-**Arguments:**
-
-* ``oData``
-
-  / *Condition*: required / *Type*: any Python data type /
-
-  The value to classify.
-
-**Returns:**
-
-* ``bIsDotDictLike``
-
-  / *Type*: bool /
-
-  ``True`` if ``oData`` behaves like a dot dictionary, ``False`` otherwise
-  (this includes plain ``dict`` instances, which are handled by their own,
-  separate branch in ``TypePrint``).
-   """
-
-   if type(oData) is dict:
-      return False  # a plain dict is handled by its own branch, not this one
-   if not isinstance(oData, collections.abc.Mapping):
-      return False
-   for sKey in oData:
-      if isinstance(sKey, str) and sKey.isidentifier():
-         return hasattr(oData, sKey)
-   # empty mapping, or none of its keys are valid attribute names: the
-   # defining "dotdict" trait (attribute access on a key) can't be verified -
-   # conservatively treat this as "not a dotdict" (the plain [DICT]/{}
-   # fallback output is harmless for an empty mapping anyway).
-   return False
-
-# --------------------------------------------------------------------------------------------------------------
 #
 @library
 class Collection(object):
@@ -509,6 +462,7 @@ It is also possible to control the log level (default is ``"INFO"``) and if the 
                 underline = len(headline)*"-"
                 BuiltIn().log(f"\n\n{underline}\n{headline}\n{underline}\n" + parameter_table + "\n", level=level, html=False, console=console)
         elif isinstance(parameter_value, collections.abc.Mapping):
+            # considers all mapping types - including all dotdict variants
             for key, value in parameter_value.items():
                 table_col_1 = f"[{key}]"
                 if prefix is not None:
