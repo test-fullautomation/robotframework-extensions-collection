@@ -508,7 +508,7 @@ It is also possible to control the log level (default is ``"INFO"``) and if the 
             else:
                 underline = len(headline)*"-"
                 BuiltIn().log(f"\n\n{underline}\n{headline}\n{underline}\n" + parameter_table + "\n", level=level, html=False, console=console)
-        elif ( (isinstance(parameter_value, dict)) or (is_dotdict_like(parameter_value)) ):
+        elif isinstance(parameter_value, collections.abc.Mapping):
             for key, value in parameter_value.items():
                 table_col_1 = f"[{key}]"
                 if prefix is not None:
