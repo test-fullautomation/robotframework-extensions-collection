@@ -26,6 +26,14 @@ local_path_override(
 # build/config/MODULE.bazel's identical bazel_dep.
 bazel_dep(name = "rules_python", version = "1.7.0")
 
+# BUILD.bazel's "update_requirements_lock_linux" target references
+# "@platforms//os:linux" directly (target_compatible_with). Bzlmod does not
+# expose this transitively just because rules_python depends on it - every
+# module that references "@platforms//..." in its own BUILD.bazel must
+# declare this bazel_dep itself. Version 0.0.11 matches the version
+# rules_python 1.7.0 itself depends on.
+bazel_dep(name = "platforms", version = "0.0.11")
+
 # Shared pip_install.bzl rules (pip_install_dir)
 bazel_dep(name = "pip_utils", version = "0.1.0")
 
