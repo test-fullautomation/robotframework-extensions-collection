@@ -88,7 +88,7 @@ variant_git_repository(
     # To build against a DIFFERENT tag without editing this file, override
     # it on the command line instead:
     #   bazel build --config=tagged --repo_env=RELEASE_TAG_OVERRIDE=rel/0.11.0 //...
-    release_tag = "rel/0.12.0",
+    release_tag = "rel/0.13.0",
     # Used when BUILD_VARIANT=daily (the project default - no --config
     # needed, see build/.bazelrc) - tracks this branch's current HEAD at
     # fetch time. Intentionally non-hermetic; Daily Build/Test only.
