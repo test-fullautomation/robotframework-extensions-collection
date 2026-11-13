@@ -22,7 +22,7 @@
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# 16.02.2026
+# 10.11.2026
 #
 # --------------------------------------------------------------------------------------------------------------
 
@@ -39,8 +39,8 @@ This library containing the keyword definitions, can be imported in the followin
 
 # -- import standard Python modules
 import pickle, os, time, random
-from dotdict import dotdict
 from tabulate import tabulate
+import collections.abc
 
 # -- import Robotframework API
 from robot.api.deco import keyword, library # required when using @keyword, @library decorators
@@ -62,7 +62,8 @@ THISMODULE     = f"{THISMODULENAME} v. {VERSION} / {VERSION_DATE}"
 #
 @library
 class Collection(object):
-    """Module main class
+    """
+Module main class
     """
 
     ROBOT_LIBRARY_DOC_FORMAT = 'reST'
@@ -460,7 +461,8 @@ It is also possible to control the log level (default is ``"INFO"``) and if the 
             else:
                 underline = len(headline)*"-"
                 BuiltIn().log(f"\n\n{underline}\n{headline}\n{underline}\n" + parameter_table + "\n", level=level, html=False, console=console)
-        elif ( (isinstance(parameter_value, dict)) or (isinstance(parameter_value, dotdict)) or ((".DotDict'>" in str(type(parameter_value)))) ):
+        elif isinstance(parameter_value, collections.abc.Mapping):
+            # considers all mapping types - including all dotdict variants
             for key, value in parameter_value.items():
                 table_col_1 = f"[{key}]"
                 if prefix is not None:
